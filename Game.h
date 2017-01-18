@@ -9,9 +9,9 @@
 * what we need.
 --------------------------------------------------------------------------------
 * Class Structure:
-*	GameManager	-- WaterLevel
-*				-- BgManager
-*				-- MarkItem
+*	GameManager	-- WaterLevel	(Water & Sand)
+*				-- BgManager	(Background)
+*				-- MarkItem		(Score & Mark)
 *
 */
 #pragma once

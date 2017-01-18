@@ -11,11 +11,18 @@ enum GameProtocol
 	/**************** Game Initial Protocol ****************/
 	SINGLE_PLAYER,			// game start with single player
 	COUPLE_PLAYER,			// game start with a couple
+	PLAYER1,
+	PLAYER2,
 
 	/**************** Game Layer Protocol ******************/
-	LAYER_HOLE,
-	LAYER_FALL_B,
-	LAYER_BG,
-	LAYER_FALL_A,
-	LAYER_WATER,
+	LAYER_HOLE,				// the hole where the stones drop
+	LAYER_STONE_BACK,		// the stone layer
+	LAYER_BG = 0x80,		// the backgroud layer
+	LAYER_STONE_FRONT,		// the stone layer
+	LAYER_WATER,			// the water/sand layer
+
+	/**************** Stone Status Protocol ******************/
+	STONE_BIRTH = 0x100,
+	STONE_ABOVE_LINE,
+	STONE_UNDER_LINE,
 };
