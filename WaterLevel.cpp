@@ -56,7 +56,7 @@ void WaterLevel::objDrawer(QPainter * painter)
 		//painter->drawRect(QRect(-500, -500, 1500, 1500));
 	}
 	//painter->setBrush(Qt::NoBrush);
-	//painter->setPen(QPen(QColor(0, 0, 0), 2));
+	//painter->setPen(QPen(QColor("#A2A2A2"), 2));
 	//painter->drawRect(bounding);
 }
 

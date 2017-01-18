@@ -68,6 +68,20 @@ int SVGData::processData()
 	}
 	maxX -= minX; maxY -= minY;
 	minX = 0; minY = 0;
+	if (turb < 1)
+	{
+		for (unsigned int i = 0; i < amount; i++)
+		{
+			unsigned int v_amount = tris[i].triangle.size();
+			for (unsigned int j = 0; j < v_amount; j++)
+			{
+				tris[i].triangle[j].setX(tris[i].triangle[j].x() * turb);
+				tris[i].triangle[j].setY(tris[i].triangle[j].y() * turb);
+			}
+		}
+		maxX *= turb;
+		maxY *= turb;
+	}
 	qDebug("childcontent:%d", tris.size());
 	qDebug("tris found:%d  fills found: %d", triscounter, findcounter);
 	return 0;
@@ -90,6 +104,12 @@ int SVGData::getTriangle(QDomElement& e)
 			findcounter++;
 			result.fillIndex = refs[data];
 		}
+	}
+	else if(fill[0] == '#')
+	{
+		fills.push_back(QBrush(QColor(QString(fill.c_str()))));
+		findcounter++;
+		result.fillIndex = fills.size() - 1;
 	}
 
 	// get the opacity
@@ -180,7 +200,7 @@ int SVGData::getFillLineGradient(QDomElement& e)
 	// get the stops
 	QDomElement child = e.firstChildElement();
 	double offset;
-	unsigned int color[3];
+	//unsigned int color[3];
 	while (!child.isNull())
 	{
 		qda = child.attributeNode("offset");
@@ -190,17 +210,17 @@ int SVGData::getFillLineGradient(QDomElement& e)
 		// qDebug("%s", qda.value().toStdString().c_str());
 		qda = child.attributeNode("style");
 		tmp = qda.value().toStdString();
-		tmp = tmp.substr(12);
-		qDebug("%s", tmp.c_str());
-		ss.clear();
-		ss.str("");
-		ss << "0x" << tmp.substr(0, 2) << ' '
-			<< "0x" << tmp.substr(2, 2) << ' '
-			<< "0x" << tmp.substr(4, 2);
-		// qDebug("%s", ss.str().c_str());
-		ss >> std:: hex >> color[0] >> color[1] >> color[2] >> std::dec;
-		// qDebug("%x %x %x", color[0], color[2], color[2]);
-		qss.push_back(QGradientStop(offset, QColor(color[0], color[1], color[2])));
+		tmp = tmp.substr(11);
+		//qDebug("%s", tmp.c_str());
+		//ss.clear();
+		//ss.str("");
+		//ss << "0x" << tmp.substr(0, 2) << ' '
+		//	<< "0x" << tmp.substr(2, 2) << ' '
+		//	<< "0x" << tmp.substr(4, 2);
+		//// qDebug("%s", ss.str().c_str());
+		//ss >> std:: hex >> color[0] >> color[1] >> color[2] >> std::dec;
+		//// qDebug("%x %x %x", color[0], color[2], color[2]);
+		qss.push_back(QGradientStop(offset, QColor(QString(tmp.c_str()))));
 		child = child.nextSiblingElement();
 	}
 

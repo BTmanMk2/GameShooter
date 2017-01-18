@@ -1,7 +1,9 @@
 #include "Game.h"
 
 GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * parent)
-	:QWidget(parent), bm2(nullptr), mi2(nullptr), waterLevel2(nullptr)
+	:QWidget(parent), bm2(nullptr), mi2(nullptr), sandLevel(nullptr),
+	gameMode(pro), player1_score(0), player2_score(0), player1_hit(0), player2_hit(0),
+	player1_height(0), player2_height(0), player1_miss(0), player2_miss(0)
 {
 	// resize the window
 	this->resize(width, height);
@@ -20,6 +22,7 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 		in >> highest_score;
 		file.close();
 	}
+	safe_height = 300;
 
 	// add items to scene
 	switch (pro)
@@ -32,8 +35,8 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 		scene->addItem(bm1);
 		// load the Fall Manager
 		// load the water level
-		waterLevel1 = new WaterLevel(WATERSVG, loc_x, 0);
-		scene->addItem(waterLevel1);
+		waterLevel = new WaterLevel(WATERSVG, loc_x, 0);
+		scene->addItem(waterLevel);
 		// load the mark item
 		mi1 = new MarkItem(FONT, 16, loc_x + 10, 10);
 		scene->addItem(mi1);
@@ -55,10 +58,10 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 		scene->addItem(mi1);
 		scene->addItem(mi2);
 		// load the water & sand level
-		waterLevel1 = new WaterLevel(WATERSVG, 512, 0);
-		waterLevel2 = new WaterLevel(WATERSVG, 0, 0);
-		scene->addItem(waterLevel1);
-		scene->addItem(waterLevel2);
+		waterLevel = new WaterLevel(WATERSVG, 512, 0);
+		sandLevel = new SandLevel(SANDSVG, 0, 0);
+		scene->addItem(waterLevel);
+		scene->addItem(sandLevel);
 
 	}
 	break;
@@ -67,15 +70,14 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 	}
 	qsrand(time(NULL));
 	mi1->addMark(10);
-	mi2->addMark(10);
 }
 
 GameManager::~GameManager()
 {
 	if (bm1) delete bm1;
-	if (waterLevel1) delete waterLevel1;
+	if (waterLevel) delete waterLevel;
 	if (bm2) delete bm2;
-	if (waterLevel2) delete waterLevel2;
+	if (sandLevel) delete sandLevel;
 	if (view) delete view;
 	if (scene) delete scene;
 	QFile file(SCORE_FILE);
@@ -87,16 +89,78 @@ GameManager::~GameManager()
 
 void GameManager::hitOne(GameProtocol & player, int score)
 {
+	if (player == PLAYER1)
+	{
+		lock1.lock();
+		player1_score += score;
+		player1_hit += 1;
+		lock1.unlock();
+		mi1->addMark(score);
+	}
+	else
+	{
+		lock2.lock();
+		player2_score += score;
+		player2_hit += 1;
+		lock2.unlock();
+		mi2->addMark(score);
+	}
 }
 
-void GameManager::missOne(GameProtocol & player, int score)
+void GameManager::hitDiamond(GameProtocol & player, int height, int score)
 {
+	if (player == PLAYER1)
+	{
+		lock1.lock();
+		player1_height += height;
+		player1_score += score;
+		player1_hit += 1;
+		lock1.unlock();
+		waterLevel->riseUp(-height);
+	}
+	else
+	{
+		lock2.lock();
+		player2_height += height;
+		player2_score += score;
+		player2_hit += 1;
+		lock2.unlock();
+		sandLevel->riseUp(-height);
+	}
+}
+
+void GameManager::missOne(GameProtocol & player, int height)
+{
+	if (player == PLAYER1)
+	{
+		lock1.lock();
+		player1_height += height;
+		player1_miss += 1;
+		lock1.unlock();
+		waterLevel->riseUp(-height);
+		if (safe_height <= player1_height) over();
+	}
+	else
+	{
+		lock2.lock();
+		player2_height += height;
+		player2_miss += 1;
+		lock2.unlock();
+		sandLevel->riseUp(-height);
+		if (safe_height <= player2_height) over();
+	}
 }
 
 int GameManager::getCurrentScore(GameProtocol & player) const
 {
 	if (player == PLAYER1) return player1_score;
 	else return player2_score;
+}
+
+int GameManager::getCurrentY(GameProtocol & player) const
+{
+	if(player == PLAYER1) return init_y - player1_height;
+	else return init_y - player2_height;
 }
 
 void GameManager::over()

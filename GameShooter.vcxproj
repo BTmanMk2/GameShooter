@@ -80,6 +80,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MySVG.cpp" />
+    <ClCompile Include="SandLevel.cpp" />
     <ClCompile Include="TestMain.cpp" />
     <ClCompile Include="WaterLevel.cpp" />
   </ItemGroup>
@@ -113,6 +114,7 @@
     <ClInclude Include="GeneratedFiles\ui_TestMain.h" />
     <ClInclude Include="MySVG.h" />
     <ClInclude Include="Protocol.h" />
+    <ClInclude Include="SandLevel.h" />
     <ClInclude Include="WaterLevel.h" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@
 #include"Protocol.h"
 #include"WaterLevel.h"
 #include"BgManager.h"
+#include"SandLevel.h"
 #include<qwidget.h>
 #include<qgraphicsscene.h>
 #include<qgraphicsview.h>
@@ -59,8 +60,10 @@ public:
 	* back functions to get instant effect.
 	*/
 	void hitOne(GameProtocol& player, int score);
-	void missOne(GameProtocol& player, int score);
+	void hitDiamond(GameProtocol& player, int height, int score);	// height is below zero
+	void missOne(GameProtocol& player, int height);
 	int getCurrentScore(GameProtocol& player) const;
+	int getCurrentY(GameProtocol& player) const;
 
 private:
 	/********************* Managers ***********************/
@@ -70,11 +73,11 @@ private:
 #endif
 	MarkItem* mi1;
 	BgManager* bm1;
-	WaterLevel* waterLevel1;
+	WaterLevel* waterLevel;
 
 	MarkItem* mi2;
 	BgManager* bm2;
-	WaterLevel* waterLevel2;
+	SandLevel* sandLevel;
 
 	/********************* Render ************************/
 	QGraphicsScene* scene;
@@ -86,7 +89,10 @@ private:
 	int player1_height, player2_height;	// the current water&sand height
 	int player1_miss, player2_miss;		// the miss counter
 	int player1_hit, player2_hit;		// the hit counter
+	QMutex lock1, lock2;
+	int safe_height;			// the highest hight you can get
 	int highest_score;			// the highest score in the history
+	static const int init_y = 540;
 	void over();
 	void single_over();
 	void couple_over();

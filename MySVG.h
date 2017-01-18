@@ -50,7 +50,7 @@ public:
 	};
 
 
-	SVGData(const char* filename, QVector<SVGTriangle>& tr, QVector<SVGFill>& fill, double turb = 5);
+	SVGData(const char* filename, QVector<SVGTriangle>& tr, QVector<SVGFill>& fill, double turb = 1.1);
 	void test();
 	QVector<SVGTriangle>& getTris() { return tris; }
 

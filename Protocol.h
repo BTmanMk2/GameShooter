@@ -1,6 +1,7 @@
 #pragma once
 
 #define WATERSVG	"model/a.svg"
+#define SANDSVG		"model/des.svg"
 #define BG_SKY		"img/bg-b.png"
 #define BG_SKY_HOLE	"img/bg-b-1.png"
 #define BG_SAND		"img/bg-a.png"
