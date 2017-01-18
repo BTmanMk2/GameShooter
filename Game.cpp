@@ -1,7 +1,7 @@
 #include "Game.h"
 
 GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * parent)
-	:QWidget(parent)
+	:QWidget(parent), bm2(nullptr), mi2(nullptr), waterLevel2(nullptr)
 {
 	// resize the window
 	this->resize(width, height);
@@ -10,7 +10,16 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 	scene = new QGraphicsScene();
 	scene->setSceneRect(0, 0, width, height);
 	view = new QGraphicsView(scene, this);
-	
+
+	// get the highest score
+	highest_score = 0;
+	QFile file(SCORE_FILE);
+	if (file.open(QIODevice::ReadOnly))
+	{
+		QTextStream in(&file);
+		in >> highest_score;
+		file.close();
+	}
 
 	// add items to scene
 	switch (pro)
@@ -19,36 +28,93 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 	{
 		int loc_x = width / 2 / 2;
 		// load the bgmanager
-		bm = new BgManager(BG_SKY, BG_SKY_HOLE, loc_x);
-		scene->addItem(bm);
+		bm1 = new BgManager(BG_SKY, BG_SKY_HOLE, loc_x);
+		scene->addItem(bm1);
 		// load the Fall Manager
 		// load the water level
-		waterLevel = new WaterLevel(WATERSVG, loc_x, 0);
-		scene->addItem(waterLevel);
+		waterLevel1 = new WaterLevel(WATERSVG, loc_x, 0);
+		scene->addItem(waterLevel1);
 		// load the mark item
-		mi = new MarkItem(FONT, 16, loc_x + 10, 10);
-		scene->addItem(mi);
+		mi1 = new MarkItem(FONT, 16, loc_x + 10, 10);
+		scene->addItem(mi1);
 		// test
 		// scene->addRect(0, 0, width, height);
 	}
 	break;
 	case COUPLE_PLAYER:
+	{
+		// load the back ground
+		bm1 = new BgManager(BG_SAND, BG_SAND_HOLE, 0);
+		bm1->holePos(175, 31);
+		bm2 = new BgManager(BG_SKY, BG_SKY_HOLE, 512);
+		mi1 = new MarkItem(FONT, 16, 512 - 100, 10, Qt::AlignRight);
+		mi2 = new MarkItem(nullptr, 16, 512 + 20, 10, Qt::AlignLeft);
+		mi2->setFamily(mi1->getFamily());
+		scene->addItem(bm1);
+		scene->addItem(bm2);
+		scene->addItem(mi1);
+		scene->addItem(mi2);
+		// load the water & sand level
+		waterLevel1 = new WaterLevel(WATERSVG, 512, 0);
+		waterLevel2 = new WaterLevel(WATERSVG, 0, 0);
+		scene->addItem(waterLevel1);
+		scene->addItem(waterLevel2);
+
+	}
+	break;
 	default:
 		break;
 	}
 	qsrand(time(NULL));
+	mi1->addMark(10);
+	mi2->addMark(10);
 }
 
 GameManager::~GameManager()
 {
-	if (bm) delete bm;
-	if (waterLevel) delete waterLevel;
+	if (bm1) delete bm1;
+	if (waterLevel1) delete waterLevel1;
+	if (bm2) delete bm2;
+	if (waterLevel2) delete waterLevel2;
 	if (view) delete view;
 	if (scene) delete scene;
+	QFile file(SCORE_FILE);
+	file.open(QIODevice::WriteOnly);
+	QTextStream out(&file);
+	out << highest_score << endl;
+	file.close();
 }
 
-MarkItem::MarkItem(const char * fontfile, int font_size, int x, int y, GameProtocol layer, QGraphicsItem * parent)
-	:mark(0), QGraphicsItem(parent), rect(0, 0, 100, 40), myOpacity(1), new_mark(-1)
+void GameManager::hitOne(GameProtocol & player, int score)
+{
+}
+
+void GameManager::missOne(GameProtocol & player, int score)
+{
+}
+
+int GameManager::getCurrentScore(GameProtocol & player) const
+{
+	if (player == PLAYER1) return player1_score;
+	else return player2_score;
+}
+
+void GameManager::over()
+{
+	if (gameMode == SINGLE_PLAYER) single_over();
+	else couple_over();
+}
+
+void GameManager::single_over()
+{
+}
+
+void GameManager::couple_over()
+{
+}
+
+MarkItem::MarkItem(const char * fontfile, int font_size, int x, int y, int flag, GameProtocol layer, QGraphicsItem * parent)
+	:mark(0), QGraphicsItem(parent), rect(0, 0, 80, 20), myOpacity(1), new_mark(-1), myFlag(flag)
 {
 	// init the location
 	setPos(x, y);
@@ -62,13 +128,20 @@ MarkItem::MarkItem(const char * fontfile, int font_size, int x, int y, GameProto
 		font.setFamily(fontFamilies.at(0));
 		family = fontFamilies.at(0);
 		qDebug("Family Name: %s", family.toStdString().c_str());
-		font.setPointSize(font_size);
 	}
+	font.setPointSize(font_size);
 }
 
-void MarkItem::setFamily(const char * familyname)
+void MarkItem::setFamily(QString& familyname)
 {
+	family = familyname;
+	font.setFamily(family);
+	update();
+}
 
+QString MarkItem::getFamily()
+{
+	return family;
 }
 
 void MarkItem::addMark(int mark)
@@ -103,7 +176,7 @@ void MarkItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option
 	painter->setFont(font);
 	painter->setPen(Qt::white);
 	painter->setOpacity(myOpacity);
-	painter->drawText(rect, itoa(mark, buf, 10));
+	painter->drawText(rect, myFlag, itoa(mark, buf, 10));
 }
 
 void MarkItem::timerEvent(QTimerEvent * timer)

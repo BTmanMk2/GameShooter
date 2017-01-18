@@ -11,6 +11,11 @@ BgManager::BgManager(const char * bgfile, const char * holefile,
 	hole.setZValue(holelayer);
 }
 
+void BgManager::holePos(int x, int y)
+{
+	hole.setPos(x, y);
+}
+
 QRectF BgManager::boundingRect() const
 {
 	return QRectF(0, 0, 512, 768);

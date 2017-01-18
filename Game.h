@@ -26,6 +26,8 @@
 #include<qlabel.h>
 #include<sstream>
 #include<qmutex.h>
+#include<qfile.h>
+#include<qtextstream.h>
 
 #ifdef _OTHER_MANAGER
 class FallManager;
@@ -46,19 +48,48 @@ public:
 	*/
 	GameManager(int width, int height, GameProtocol pro = SINGLE_PLAYER, QWidget* parent = nullptr);
 	~GameManager();
+
+	/********************* Call Back **********************/
+	/**
+	* Call Back
+	*	player	GaP	:which player respond to that
+	*	data	int	:data to interact
+	* This Part defines a general function that needed to be
+	* used during the game. Instead of using event, we use call
+	* back functions to get instant effect.
+	*/
+	void hitOne(GameProtocol& player, int score);
+	void missOne(GameProtocol& player, int score);
+	int getCurrentScore(GameProtocol& player) const;
+
 private:
 	/********************* Managers ***********************/
 #ifdef _OTHER_MANAGER
 	FallManager* fm;
 	SandLevel* sandLevel;
 #endif
-	MarkItem* mi;
-	BgManager* bm;
-	WaterLevel* waterLevel;
+	MarkItem* mi1;
+	BgManager* bm1;
+	WaterLevel* waterLevel1;
+
+	MarkItem* mi2;
+	BgManager* bm2;
+	WaterLevel* waterLevel2;
 
 	/********************* Render ************************/
 	QGraphicsScene* scene;
 	QGraphicsView* view;
+
+	/********************* Element ***********************/
+	GameProtocol gameMode;				// game mode, SINGLE or COUPLE
+	int player1_score, player2_score;	// the score of the game
+	int player1_height, player2_height;	// the current water&sand height
+	int player1_miss, player2_miss;		// the miss counter
+	int player1_hit, player2_hit;		// the hit counter
+	int highest_score;			// the highest score in the history
+	void over();
+	void single_over();
+	void couple_over();
 };
 
 class MarkItem : public QGraphicsItem, public QObject
@@ -74,7 +105,7 @@ public:
 	*	parent		QGraIt	the parent graphics item
 	* read self defined font from given file and build up the font
 	*/
-	MarkItem(const char* fontfile, int font_size, int x, int y, GameProtocol layer = LAYER_WATER, QGraphicsItem* parent = Q_NULLPTR);
+	MarkItem(const char* fontfile, int font_size, int x, int y, int flag = Qt::AlignLeft, GameProtocol layer = LAYER_WATER, QGraphicsItem* parent = Q_NULLPTR);
 
 	/**
 	* Set Family
@@ -82,8 +113,8 @@ public:
 	* One use this function when the constructor's fontfile set to NULL, and you can set the font through this way,
 	* especially when you have multi-MarkItem, then you just have to load the file once.
 	*/
-	void setFamily(const char* familyname);
-
+	void setFamily(QString& familyname);
+	QString getFamily();
 	/**
 	* Add Mark
 	*	mark		int		the mark you need to increase/decrease according to its sign
@@ -99,6 +130,7 @@ private:
 	// marks
 	int mark;
 	int new_mark;
+	int myFlag;
 	// font
 	QFont font;
 	QString family;

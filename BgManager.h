@@ -11,6 +11,7 @@ public:
 		GameProtocol bglayer = LAYER_BG, GameProtocol holelayer = LAYER_HOLE,
 		QGraphicsItem* parent = Q_NULLPTR);
 
+	void holePos(int x, int y);
 	/*********************** Override ***************************/
 	QRectF boundingRect() const;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = Q_NULLPTR);

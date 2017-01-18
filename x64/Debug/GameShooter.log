@@ -1,3 +1,7 @@
 ﻿  Game.cpp
+  moc_TestMain.cpp
+  TestMain.cpp
+  main.cpp
+  正在生成代码...
   GameShooter.vcxproj -> D:\engineer\VSproject\GameShooter\x64\Debug\GameShooter.exe
   GameShooter.vcxproj -> D:\engineer\VSproject\GameShooter\x64\Debug\GameShooter.pdb (Full PDB)

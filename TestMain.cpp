@@ -3,7 +3,7 @@
 
 TestMain::TestMain(int argc, char* argv[], QWidget * parent) : QMainWindow(parent){
 	// analysis the arguments
-	GameProtocol gp = SINGLE_PLAYER;
+	GameProtocol gp = COUPLE_PLAYER;
 	if (argc == 2)
 	{
 		if (std::string(argv[1]) == "-couple")
