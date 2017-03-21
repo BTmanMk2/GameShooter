@@ -39,6 +39,7 @@ public:
 		// turbulence
 		QVector<QPair<qreal, bool>> turbTar;
 		QVector<QPair<qreal, bool>> turbArc;
+		QVector<bool> acute;
 	};
 
 	struct SVGFill

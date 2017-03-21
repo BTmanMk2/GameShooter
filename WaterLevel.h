@@ -46,6 +46,9 @@ private:
 	void shuffle1();
 	void shuffle2();
 
+	void addRgb(char r, char g, char b);
+	void saveRgb();
+
 	qreal step = 0.3;
 	double turb = 50;
 	int riseDis = 0;

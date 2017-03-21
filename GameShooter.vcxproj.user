@@ -2,11 +2,11 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QTDIR>D:\engineer\QT\5.7\msvc2015_64</QTDIR>
-    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+    <QTDIR>D:\QT_5.7.1\5.7\msvc2015_64</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <QTDIR>D:\engineer\QT\5.7\msvc2015_64</QTDIR>
-    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+    <QTDIR>D:\QT_5.7.1\5.7\msvc2015_64</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
   </PropertyGroup>
 </Project>

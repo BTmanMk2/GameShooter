@@ -1,17 +1,24 @@
 #include "Game.h"
+#include <QKeyEvent>
 
-GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * parent)
-	:QWidget(parent), bm2(nullptr), mi2(nullptr), sandLevel(nullptr),
+
+GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol pro, QWidget * parent)
+	:QWidget(parent), bm2(nullptr), mi2(nullptr), sandLevel(nullptr), window(main),
 	gameMode(pro), player1_score(0), player2_score(0), player1_hit(0), player2_hit(0),
 	player1_height(0), player2_height(0), player1_miss(0), player2_miss(0)
 {
+	qsrand(time(NULL));
 	// resize the window
 	this->resize(width, height);
 
 	// set the view
 	scene = new QGraphicsScene();
 	scene->setSceneRect(0, 0, width, height);
+	//scene->setBackgroundBrush(QBrush(Qt::black));
 	view = new QGraphicsView(scene, this);
+	view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	view->setFixedSize(1024, 768);
 
 	// get the highest score
 	highest_score = 0;
@@ -22,7 +29,7 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 		in >> highest_score;
 		file.close();
 	}
-	safe_height = 300;
+	safe_height = 400;
 
 	// add items to scene
 	switch (pro)
@@ -31,7 +38,7 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 	{
 		int loc_x = width / 2 / 2;
 		// load the bgmanager
-		bm1 = new BgManager(BG_SKY, BG_SKY_HOLE, loc_x);
+		bm1 = new BgManager(BG_SKY, BG_SKY_HOLE, scene, loc_x);
 		scene->addItem(bm1);
 		// load the Fall Manager
 		// load the water level
@@ -41,15 +48,19 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 		mi1 = new MarkItem(FONT, 16, loc_x + 10, 10);
 		scene->addItem(mi1);
 		// test
-		// scene->addRect(0, 0, width, height);
+		QPointF poi1(loc_x, 0);
+		sm1 = new StoneManager(poi1, PLAYER1, this);
+		scene->addItem(sm1);
+		sm1->setFlag(QGraphicsItem::ItemIsFocusable);
+		sm1->setFocus();
 	}
 	break;
 	case COUPLE_PLAYER:
 	{
 		// load the back ground
-		bm1 = new BgManager(BG_SAND, BG_SAND_HOLE, 0);
+		bm1 = new BgManager(BG_SAND, BG_SAND_HOLE, scene, 0);
 		bm1->holePos(175, 31);
-		bm2 = new BgManager(BG_SKY, BG_SKY_HOLE, 512);
+		bm2 = new BgManager(BG_SKY, BG_SKY_HOLE, scene, 512);
 		mi1 = new MarkItem(FONT, 16, 512 - 100, 10, Qt::AlignRight);
 		mi2 = new MarkItem(nullptr, 16, 512 + 20, 10, Qt::AlignLeft);
 		mi2->setFamily(mi1->getFamily());
@@ -63,12 +74,28 @@ GameManager::GameManager(int width, int height, GameProtocol pro, QWidget * pare
 		scene->addItem(waterLevel);
 		scene->addItem(sandLevel);
 
+		QPointF poi1(0, 0);
+		QPointF poi2(512, 0);
+		sm1 = new StoneManager(poi1, PLAYER1, this);
+		sm2 = new StoneManager(poi2, PLAYER2, this);
+		scene->addItem(sm1);
+		scene->addItem(sm2);
+		sm1->addFrag();
+		sm2->addFrag();
+		sm1->setFlag(QGraphicsItem::ItemIsFocusable);
+		sm2->setFlag(QGraphicsItem::ItemIsFocusable);
+		sm1->setFocus();
+		sm2->setFocus();
+
+		//frag = new fragment(1, QPointF(20, 20));
+		//scene->addItem(frag);
+
 	}
 	break;
 	default:
 		break;
 	}
-	qsrand(time(NULL));
+	
 	mi1->addMark(10);
 }
 
@@ -159,9 +186,10 @@ int GameManager::getCurrentScore(GameProtocol & player) const
 
 int GameManager::getCurrentY(GameProtocol & player) const
 {
-	if(player == PLAYER1) return init_y - player1_height;
+	if (player == PLAYER1) return init_y - player1_height;
 	else return init_y - player2_height;
 }
+
 
 void GameManager::over()
 {
@@ -171,14 +199,31 @@ void GameManager::over()
 
 void GameManager::single_over()
 {
+	sm1->stop();
+	Sleep(5000);
+	delete this;
+	exit(0);
 }
 
 void GameManager::couple_over()
 {
+	sm1->stop();
+	sm2->stop();
+	Sleep(5000);
+	delete this;
+	exit(0);
+}
+
+void GameManager::keyPressEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Escape) {
+		delete this;
+		exit(0);
+	}
 }
 
 MarkItem::MarkItem(const char * fontfile, int font_size, int x, int y, int flag, GameProtocol layer, QGraphicsItem * parent)
-	:mark(0), QGraphicsItem(parent), rect(0, 0, 80, 20), myOpacity(1), new_mark(-1), myFlag(flag)
+	:mark(0), QGraphicsItem(parent), rect(0, 0, 80, 40), myOpacity(1), new_mark(-1), myFlag(flag)
 {
 	// init the location
 	setPos(x, y);

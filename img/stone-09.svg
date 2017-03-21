@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="595.28px" height="841.89px" viewBox="0 0 595.28 841.89" enable-background="new 0 0 595.28 841.89" xml:space="preserve">
+<g>
+	
+		<linearGradient id="triangle36_1_" gradientUnits="userSpaceOnUse" x1="1.1843" y1="840.8502" x2="1.7582" y2="840.2762" gradientTransform="matrix(188 0 0 -75 -7.041 63360.082)">
+		<stop  offset="0" style="stop-color:#CDD3CA"/>
+		<stop  offset="1" style="stop-color:#CBD3CC"/>
+	</linearGradient>
+	<polygon id="triangle36_452_" fill="url(#triangle36_1_)" points="221.034,337.225 273.258,294.182 328.925,302.791 	"/>
+	
+		<linearGradient id="triangle36_2_" gradientUnits="userSpaceOnUse" x1="1.1574" y1="841.0889" x2="1.7312" y2="840.5151" gradientTransform="matrix(259 0 0 -85 -78.06 71795.0859)">
+		<stop  offset="0" style="stop-color:#DDE6DC"/>
+		<stop  offset="1" style="stop-color:#BFC5C0"/>
+	</linearGradient>
+	<polygon id="triangle36_451_" fill="url(#triangle36_2_)" points="221.034,337.225 328.925,302.791 369.67,351.569 	"/>
+	
+		<linearGradient id="triangle36_3_" gradientUnits="userSpaceOnUse" x1="0.1501" y1="841.7318" x2="0.7241" y2="841.1578" gradientTransform="matrix(60 0 0 -171 330.952 144292.1719)">
+		<stop  offset="0" style="stop-color:#969797"/>
+		<stop  offset="1" style="stop-color:#7C7A7D"/>
+	</linearGradient>
+	<polygon id="triangle36_450_" fill="url(#triangle36_3_)" points="369.67,351.569 375.983,412.981 341.552,449.711 	"/>
+	
+		<linearGradient id="triangle36_4_" gradientUnits="userSpaceOnUse" x1="2.5513" y1="841.752" x2="3.1252" y2="841.178" gradientTransform="matrix(33 0 0 -172 126.028 145109.1719)">
+		<stop  offset="0" style="stop-color:#C1C7B8"/>
+		<stop  offset="1" style="stop-color:#B4B4A9"/>
+	</linearGradient>
+	<polygon id="triangle36_449_" fill="url(#triangle36_4_)" points="208.407,365.347 221.034,337.225 227.347,435.932 	"/>
+	
+		<linearGradient id="triangle36_5_" gradientUnits="userSpaceOnUse" x1="1.1401" y1="841.6826" x2="1.7139" y2="841.1087" gradientTransform="matrix(259 0 0 -172 -78.06 145109.1719)">
+		<stop  offset="0" style="stop-color:#E0EADF"/>
+		<stop  offset="1" style="stop-color:#A9A9A3"/>
+	</linearGradient>
+	<polygon id="triangle36_448_" fill="url(#triangle36_5_)" points="221.034,337.225 369.67,351.569 227.347,435.932 	"/>
+	
+		<linearGradient id="triangle36_6_" gradientUnits="userSpaceOnUse" x1="1.2037" y1="842.3251" x2="1.7776" y2="841.7512" gradientTransform="matrix(127 0 0 -53 65.038 45083.1016)">
+		<stop  offset="0" style="stop-color:#B2B8B6"/>
+		<stop  offset="1" style="stop-color:#9D9C97"/>
+	</linearGradient>
+	<polygon id="triangle36_447_" fill="url(#triangle36_6_)" points="258.336,464.626 300.232,466.348 227.347,435.932 	"/>
+	
+		<linearGradient id="triangle36_7_" gradientUnits="userSpaceOnUse" x1="1.2044" y1="842.426" x2="1.7783" y2="841.8521" gradientTransform="matrix(199 0 0 -53 -7.043 45083.1016)">
+		<stop  offset="0" style="stop-color:#857C77"/>
+		<stop  offset="1" style="stop-color:#736663"/>
+	</linearGradient>
+	<polygon id="triangle36_446_" fill="url(#triangle36_7_)" points="300.232,466.348 341.552,449.711 227.347,435.932 	"/>
+	
+		<linearGradient id="triangle36_8_" gradientUnits="userSpaceOnUse" x1="1.1628" y1="841.7781" x2="1.7368" y2="841.2042" gradientTransform="matrix(248 0 0 -171 -56.059 144292.1719)">
+		<stop  offset="0" style="stop-color:#92908E"/>
+		<stop  offset="1" style="stop-color:#99958E"/>
+	</linearGradient>
+	<polygon id="triangle36_445_" fill="url(#triangle36_8_)" points="341.552,449.711 369.67,351.569 227.347,435.932 	"/>
+</g>
+</svg>

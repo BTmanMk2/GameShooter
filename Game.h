@@ -12,6 +12,7 @@
 *	GameManager	-- WaterLevel	(Water & Sand)
 *				-- BgManager	(Background)
 *				-- MarkItem		(Score & Mark)
+*				-- StoneManager	(Stones)
 *
 */
 #pragma once
@@ -19,20 +20,24 @@
 #include"WaterLevel.h"
 #include"BgManager.h"
 #include"SandLevel.h"
-#include<qwidget.h>
-#include<qgraphicsscene.h>
-#include<qgraphicsview.h>
-#include<qfontdatabase.h>
-#include<qfont.h>
-#include<qlabel.h>
+#include "stonemanager.h"
+#include<QWidget>
+#include<QGraphicsScene>
+#include<QGraphicsView>
+#include<QFontDatabase>
+#include<QFont>
+#include<QLabel>
 #include<sstream>
-#include<qmutex.h>
-#include<qfile.h>
-#include<qtextstream.h>
+#include<QMutex>
+#include<QFile>
+#include<QTextStream>
+#include<QMainWindow>
+#include<QApplication>
+
+//#include "fragment.h"
 
 #ifdef _OTHER_MANAGER
 class FallManager;
-class SandLevel;
 #endif
 
 class MarkItem;
@@ -47,7 +52,7 @@ public:
 	*	parent	QWi	:the parent widget of the game
 	* Build up the whole system.
 	*/
-	GameManager(int width, int height, GameProtocol pro = SINGLE_PLAYER, QWidget* parent = nullptr);
+	GameManager(QMainWindow* main, int width, int height, GameProtocol pro = SINGLE_PLAYER, QWidget* parent = nullptr);
 	~GameManager();
 
 	/********************* Call Back **********************/
@@ -65,6 +70,9 @@ public:
 	int getCurrentScore(GameProtocol& player) const;
 	int getCurrentY(GameProtocol& player) const;
 
+	/*********************** Events **************************/
+	void keyPressEvent(QKeyEvent* event);
+
 private:
 	/********************* Managers ***********************/
 #ifdef _OTHER_MANAGER
@@ -79,9 +87,14 @@ private:
 	BgManager* bm2;
 	SandLevel* sandLevel;
 
+	StoneManager* sm1;
+	StoneManager* sm2;
+
+	//fragment *frag;
 	/********************* Render ************************/
 	QGraphicsScene* scene;
 	QGraphicsView* view;
+	QMainWindow* window;
 
 	/********************* Element ***********************/
 	GameProtocol gameMode;				// game mode, SINGLE or COUPLE

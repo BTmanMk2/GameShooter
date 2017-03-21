@@ -3,16 +3,14 @@
 WaterLevel::WaterLevel(const char * filename, int x, int y, int heightMax,
 	GameProtocol layer, QGraphicsItem* parent)
 	:svg(filename, tris, fills), QGraphicsItem(parent), 
-	bounding(svg.minX, svg.minY, svg.maxX - svg.minX, svg.maxY - svg.minY + 256)
+	bounding(2, -50, svg.maxX - svg.minX, svg.maxY - svg.minY + 256)
 {
 	// set the bounding box
 	bounding.setHeight(heightMax - y);
 	qDebug("Item size: %f", svg.maxX);
 	setPos(x, y);
 	setZValue(layer);
-	setFlag(QGraphicsItem::ItemIsFocusable);
-	setFocus();
-	riseUp(500);
+	riseUp(600);
 	startTimer(20);
 	//qsrand(time(NULL));
 }
@@ -47,6 +45,7 @@ void WaterLevel::objDrawer(QPainter * painter)
 		unsigned int v_amount = qp.size();
 		for (unsigned int j = 0; j < v_amount; j++)
 		{
+			if (tris[i].acute[j]) continue;
 			if (tris[i].turbArc[j].second = true)
 				qp[j].setY(qp[j].y() + tris[i].turbArc[j].first);
 			else
@@ -68,6 +67,7 @@ void WaterLevel::shuffle1()
 		unsigned int v_amount = tris[i].triangle.size();
 		for (unsigned int j = 0; j < v_amount; j++)
 		{
+			if(tris[i].acute[j]) continue;
 			if (tris[i].turbTar[j].second &&
 				tris[i].turbArc[j].first <= 0)
 			{
@@ -104,9 +104,10 @@ void WaterLevel::shuffle2()
 
 void WaterLevel::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->setPen(QPen(QColor(255, 255, 255, 0), 0));
 	objDrawer(painter);
 	//// 反走样
-	//painter->setRenderHint(QPainter::Antialiasing, true);
 
 	//// 设置渐变色
 	//QLinearGradient linear(QPointF(80, 80), QPointF(150, 150));
@@ -117,7 +118,6 @@ void WaterLevel::paint(QPainter * painter, const QStyleOptionGraphicsItem * opti
 	//linear.setSpread(QGradient::PadSpread);
 
 	//// 设置画笔颜色、宽度
-	//painter->setPen(QPen(QColor(0, 160, 230), 2));
 
 	//// 设置画刷填充
 	//painter->setBrush(linear);
@@ -134,8 +134,22 @@ void WaterLevel::timerEvent(QTimerEvent * timer)
 
 void WaterLevel::keyReleaseEvent(QKeyEvent * event)
 {
-	qDebug("Key Release");
-	riseUp(-1);
+
 }
 
+void WaterLevel::addRgb(char r, char g, char b)
+{
+	unsigned int i = fills.size();
+	for (unsigned int j = 0; j < i; j++)
+	{
+		
+	}
+}
 
+void WaterLevel::saveRgb()
+{
+	QFile file("color.txt");
+	file.open(QIODevice::ReadWrite);
+	file.write("");
+	file.close();
+}

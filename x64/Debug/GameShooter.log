@@ -1,3 +1,12 @@
-﻿  SandLevel.cpp
-  GameShooter.vcxproj -> D:\engineer\VSproject\GameShooter\x64\Debug\GameShooter.exe
-  GameShooter.vcxproj -> D:\engineer\VSproject\GameShooter\x64\Debug\GameShooter.pdb (Full PDB)
+﻿  Game.cpp
+  moc_TestMain.cpp
+  moc_stonemanager.cpp
+  SandLevel.cpp
+  TestMain.cpp
+  fragment.cpp
+  main.cpp
+  stone.cpp
+  stonemanager.cpp
+  正在生成代码...
+  GameShooter.vcxproj -> D:\Documents\Visual Studio 2015\Projects\GameShooter\x64\Debug\GameShooter.exe
+  GameShooter.vcxproj -> D:\Documents\Visual Studio 2015\Projects\GameShooter\x64\Debug\GameShooter.pdb (Full PDB)

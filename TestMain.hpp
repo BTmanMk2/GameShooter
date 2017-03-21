@@ -2,13 +2,13 @@
 #ifndef TESTMAIN_HPP
 #define TESTMAIN_HPP
 #include <QMainWindow>
-#include <qgraphicsscene.h>
-#include <qgraphicsview.h>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include "ui_TestMain.h"
 
 #include"Game.h"
 
-#include <QtSvg\qgraphicssvgitem.h>
+#include <QtSvg\QGraphicsSvgItem>
 
 class TestMain : public QMainWindow, public Ui::TestMain {
 	Q_OBJECT

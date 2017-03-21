@@ -68,12 +68,42 @@
     <ClCompile Include="SandLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stonemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_stone.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_stone.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_stonemanager.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_stonemanager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="fragment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="TestMain.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="TestMain.hpp">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="stone.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="stonemanager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="fragment.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -122,6 +152,48 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="img\bg-b-2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-04.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-05.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-06.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-07.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-08.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-09.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-10.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-11.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-12.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-13.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\stone-14.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

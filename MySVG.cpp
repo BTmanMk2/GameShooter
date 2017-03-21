@@ -145,6 +145,22 @@ int SVGData::getTriangle(QDomElement& e)
 		result.turbTar.push_back(QPair<qreal, bool>(0, true));
 		result.turbArc.push_back(QPair<qreal, bool>(0, true));
 	}
+	// try to know the acute angle
+	unsigned int acute_amount = result.triangle.size();
+	for (unsigned int i = 0; i < acute_amount; i++)
+	{
+		QPointF* center = &result.triangle[i];
+		QPointF* x = &result.triangle[(i + acute_amount - 1) % acute_amount];
+		QPointF* y = &result.triangle[(i + acute_amount + 1) % acute_amount];
+		qreal x1 = x->x() - center->x(),
+			y1 = x->y() - center->y(),
+			x2 = y->x() - center->x(),
+			y2 = y->y() - center->y();
+		qreal anglecos = (x1 * x2 + y1 * y2) / sqrt(x1 * x1 + y1 * y1) / sqrt(x2 * x2 + y2 * y2);
+		qreal angle = acos(anglecos);
+		if (angle > 1) result.acute.push_back(false);
+		else result.acute.push_back(true);
+	}
 
 	// write back
 	tris.push_back(result);
