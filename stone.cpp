@@ -103,6 +103,7 @@ void Stone::mousePressEvent(QGraphicsSceneMouseEvent  *event)
 
 void Stone::drop() {
 	//std::cout << x() << "  " << y() << std::endl;
+	parentManager->getPoint();
 	if (stage == STONE_BIRTH) {
 		setPos(x() + birthMov.x(), y() + birthMov.y());
 		setScale(scale() + scaleStep);

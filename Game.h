@@ -44,6 +44,7 @@ class MarkItem;
 class GameManager : public QWidget
 {
 public:
+	//Q_OBJECT
 	/**
 	* Constructor
 	*	width	int	:the width of the game
@@ -54,7 +55,7 @@ public:
 	*/
 	GameManager(QMainWindow* main, int width, int height, GameProtocol pro = SINGLE_PLAYER, QWidget* parent = nullptr);
 	~GameManager();
-
+	
 	/********************* Call Back **********************/
 	/**
 	* Call Back
@@ -72,6 +73,8 @@ public:
 
 	/*********************** Events **************************/
 	void keyPressEvent(QKeyEvent* event);
+
+	void getGunPoint();
 
 private:
 	/********************* Managers ***********************/
@@ -109,6 +112,9 @@ private:
 	void over();
 	void single_over();
 	void couple_over();
+
+	//public slots:
+	
 };
 
 class MarkItem : public QGraphicsItem, public QObject

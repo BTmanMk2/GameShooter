@@ -1,9 +1,8 @@
-﻿  Game.cpp
+﻿  Moc'ing stonemanager.h...
+  Game.cpp
   moc_TestMain.cpp
   moc_stonemanager.cpp
-  SandLevel.cpp
   TestMain.cpp
-  fragment.cpp
   main.cpp
   stone.cpp
   stonemanager.cpp

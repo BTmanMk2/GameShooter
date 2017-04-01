@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <QKeyEvent>
-
+#include "gun.h"
 
 GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol pro, QWidget * parent)
 	:QWidget(parent), bm2(nullptr), mi2(nullptr), sandLevel(nullptr), window(main),
@@ -19,6 +19,12 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	view->setFixedSize(1024, 768);
+
+	//add by wzy
+	readGunXMl();
+	cameraInitial();
+	blueToothInitial();
+	equipmentTest = true;
 
 	// get the highest score
 	highest_score = 0;
@@ -95,7 +101,9 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	default:
 		break;
 	}
+
 	
+
 	mi1->addMark(10);
 }
 
@@ -112,6 +120,9 @@ GameManager::~GameManager()
 	QTextStream out(&file);
 	out << highest_score << endl;
 	file.close();
+	//add by wzy
+	blueToothEnd();
+	cameraEnd();
 }
 
 void GameManager::hitOne(GameProtocol & player, int score)
@@ -212,6 +223,11 @@ void GameManager::couple_over()
 	Sleep(5000);
 	delete this;
 	exit(0);
+}
+
+void GameManager::getGunPoint()
+{
+	infraredCheck();
 }
 
 void GameManager::keyPressEvent(QKeyEvent* event)

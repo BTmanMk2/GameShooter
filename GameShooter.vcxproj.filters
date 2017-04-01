@@ -106,6 +106,9 @@
     <CustomBuild Include="fragment.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="Game.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_TestMain.h">
@@ -117,9 +120,6 @@
     <ClInclude Include="WaterLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Protocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -127,6 +127,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SandLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

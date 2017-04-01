@@ -4,6 +4,7 @@
 #include<qtimer.h>
 #include<qbrush.h>
 #include<time.h>
+#include<qmutex.h>
 #include<qtextstream.h>
 #include"Protocol.h"
 #include"MySVG.h"
@@ -15,6 +16,8 @@ public:
 	void readColors();
 	int getSize();
 	QString getRandomColor();
+	QString getAccRandomColor(int num);
+	int accbound = 5;
 };
 
 class SandLevel : public QGraphicsItem, public QObject
@@ -24,7 +27,7 @@ public:
 	SandLevel(const char* filename, int x, int y, int heightMax = 768,
 		GameProtocol layer = LAYER_SAND, QGraphicsItem* parent = Q_NULLPTR);
 
-	void riseUp(qreal dis);
+	void riseUp(qreal dis, bool record = false);
 
 	void initSand();
 
@@ -33,6 +36,8 @@ public:
 	void computeSandLine(int up, int down);
 
 	void computeSandTurb();
+
+	void computeColorLine();
 	/************************ Override *****************************/
 	QRectF boundingRect() const;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
@@ -63,15 +68,22 @@ private:
 	};
 
 	QVector<QVector<MyPoint>> lines;
+	QVector<QVector<QString>> colors;
+	QVector<qreal> peak;
 	int minC = 10, maxC = 15;
 
 	int currentY = 30;
 	int stepY = 50;
+	int stepTime = 10;
 
-	int maxX = 511;
-	int turbX = 2;
-	int turbY = 10;
-	int maxConTri = 2;
+	int maxX = 511;						// to the rightest place
+	int turbX = 2;						// cor-x's turb
+	int turbY = 12;						// cor-y's turb
+	int minConTri = 4, maxConTri = 8;	// conversed triangle
+	int midHeight = 50;					// peak height
+
+	QMutex lock;
+	int stored_dis = 0;
 
 	double myDoubleRand()
 	{

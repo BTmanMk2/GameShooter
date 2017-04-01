@@ -176,6 +176,11 @@ double StoneManager::getCurrentSpeed()
 	return currentSpeed;
 }
 
+void StoneManager::getPoint()
+{
+	parentManager->getGunPoint();
+}
+
 StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager* parentManager) {
 	this->parentManager = parentManager;
 	level = 0;
