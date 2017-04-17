@@ -39,11 +39,11 @@ int SVGData::processData()
 	if (!child.isNull() && child.tagName() == "g") child = child.firstChildElement();
 	while (!child.isNull())
 	{
-		qDebug("yes, we are here1!:%s", child.tagName().toStdString().c_str());
+		//qDebug("yes, we are here1!:%s", child.tagName().toStdString().c_str());
 		if (child.tagName() == "polygon") // regard as triangle
 		{
 			triscounter++;
-			qDebug("yes, we are here2!");
+			//qDebug("yes, we are here2!");
 			getTriangle(child);
 		}
 		else if (child.tagName() == "linearGradient") // regard as fill
@@ -174,7 +174,7 @@ int SVGData::getFillLineGradient(QDomElement& e)
 	// get the id
 	QDomAttr qda = e.attributeNode("id");
 	std::string id = qda.value().toStdString();
-	qDebug("%s", id.c_str());
+	//qDebug("%s", id.c_str());
 
 	// get the gradient matrix
 	QTransform qts;

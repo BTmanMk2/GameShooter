@@ -14,7 +14,7 @@
 
 #include "fragment.h"
 
-#include <QMediaPlayer>
+//#include <QMediaPlayer>
 //#include "MySVG.h"
 
 
@@ -34,8 +34,6 @@ class StoneManager :public QObject, public QGraphicsRectItem
 	int level;
 
 	std::vector<QImage*>stoneImages;
-	/*std::vector<QVector<SVGData::SVGTriangle>*>SVGTris;
-	std::vector<QVector<SVGData::SVGFill>*>SVGFills;*/
 
 	std::vector<Stone*>stonePointers;
 	std::vector<int>stoneLayer;
@@ -52,7 +50,6 @@ class StoneManager :public QObject, public QGraphicsRectItem
 	unsigned int curStack = 0;
 	unsigned int inRangeStack = 0;
 
-	QMediaPlayer * stonePlayer;
 
 	fragment *frag;
 
@@ -69,6 +66,7 @@ public:
 	void levelUp();
 	void stop();
 	void start();
+	void reset();
 	void addScore(int score);
 	void missOne();
 	int getWaterHeight();

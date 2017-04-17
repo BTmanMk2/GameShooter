@@ -57,8 +57,8 @@ Stone::Stone(QImage* stoneImg,	QPointF birthPos, QPointF shootPos, int stoneID, 
 	popMovAccl.setX(popMov.x() / popAcclRatio);
 	popMovAccl.setY(popMov.y() / popAcclRatio);
 
-	/*this->tris = tris;
-	this->fills = fills;*/
+	stonePlayer = new QMediaPlayer();
+	stonePlayer->setMedia(QUrl::fromLocalFile("sound/Stone_hit.wav"));
 
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(drop()));
@@ -94,7 +94,9 @@ void Stone::mousePressEvent(QGraphicsSceneMouseEvent  *event)
 		std::cout << "clicked" << std::endl;
 		//Game->addScore(score, groupID);
 		parentManager->addScore(10);
-		
+		//play sound
+		stonePlayer->play();
+
 		parentManager->playfrag(stoneType, QPointF(x(), y()));
 		removeThis();
 		//Game->stoneManager1->playFragment(QPointF loc, unsigned int stoneType);

@@ -9,7 +9,7 @@
 
 #include"Game.h"
 
-#include <QtSvg\qgraphicssvgitem.h>
+#include <Qtsvg/QGraphicsSvgItem>
 
 class TestMain : public QMainWindow, public Ui::TestMain {
 	Q_OBJECT

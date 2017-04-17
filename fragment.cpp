@@ -24,11 +24,15 @@ void fragment::objDrawer(QPainter* painter)
 	for (int i = 0; i < stones.size(); i++) {
 		for (int j = 0; j < stones[i].tris.size(); j++) {
 			painter->setOpacity(stones[i].tris[j].opacity);
+			stones[i].tris[j].opacity *= 0.9; //-= (1.0 ./(double) maxStep);
+
 			painter->setBrush(stones[i].fills[j].brush);
 			painter->drawPolygon(stones[i].tris[j].triangle);
-
-			stones[i].tris[j].opacity *= 0.9; //-= (1.0 /(double) maxStep);
 		}
+
+			
+		if (stones[i].tris.size() > 0)
+			qDebug() << "Opacity: " << stones[i].tris[0].opacity;
 	}
 	
 

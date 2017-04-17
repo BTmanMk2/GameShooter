@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <QKeyEvent>
+
 #include "gun.h"
 
 GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol pro, QWidget * parent)
@@ -57,6 +58,7 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 		QPointF poi1(loc_x, 0);
 		sm1 = new StoneManager(poi1, PLAYER1, this);
 		scene->addItem(sm1);
+		sm1->addFrag();
 		sm1->setFlag(QGraphicsItem::ItemIsFocusable);
 		sm1->setFocus();
 	}
@@ -92,6 +94,9 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 		sm2->setFlag(QGraphicsItem::ItemIsFocusable);
 		sm1->setFocus();
 		sm2->setFocus();
+
+		sm1->start();
+		sm2->start();
 
 		//frag = new fragment(1, QPointF(20, 20));
 		//scene->addItem(frag);
@@ -180,7 +185,7 @@ void GameManager::missOne(GameProtocol & player, int height)
 		player1_miss += 1;
 		lock1.unlock();
 		sandLevel->riseUp(-height);
-		if (safe_height <= player1_height) over();
+		if (safe_height <= player1_height) gameover();
 	}
 	else
 	{
@@ -189,7 +194,7 @@ void GameManager::missOne(GameProtocol & player, int height)
 		player2_miss += 1;
 		lock2.unlock();
 		waterLevel->riseUp(-height);
-		if (safe_height <= player2_height) over();
+		if (safe_height <= player2_height) gameover();
 	}
 }
 
@@ -206,7 +211,7 @@ int GameManager::getCurrentY(GameProtocol & player) const
 }
 
 
-void GameManager::over()
+void GameManager::gameover()
 {
 	if (gameMode == SINGLE_PLAYER) single_over();
 	else couple_over();
@@ -217,23 +222,54 @@ void GameManager::single_over()
 	sm1->stop();
 	Sleep(5000);
 	delete this;
-	exit(0);
+	QApplication::quit();
 }
 
 void GameManager::couple_over()
 {
 	sm1->stop();
 	sm2->stop();
+
+	QGraphicsRectItem *rect;
+	rect->setRect(0, 0, 1024, 768);
+	rect->setPen(QPen(Qt::black));
+	QColor transpBlack(255, 255, 255, 150);
+	rect->setBrush(QBrush(transpBlack));
+	rect->setZValue(UI_BASE);
+	scene->addItem(rect);
 	Sleep(5000);
 	delete this;
-	exit(0);
+	QApplication::quit();
 }
 
 
 
+void GameManager::single_reset()
+{
+	sm1->reset();
+	player1_height = 0;
+	player1_miss = 0;
+	//sandLevel->riseUp();
+}
+
+void GameManager::couple_reset()
+{
+	sm1->reset();
+	sm2->reset();
+
+	player1_height = 0;
+	player1_miss = 0;
+	player2_height = 0;
+	player2_miss = 0;
+	//need fixed
+	//sandLevel->riseUp();
+	//waterLevel->riseUp();
+
+}
+
 void GameManager::gunUpdate()
 {
-	QPointF ret;
+	QPoint ret;
 	if (GetSingleShootPointsMsg != NULL)
 	{
 		StPointsMsg *stpoints = GetSingleShootPointsMsg();
@@ -241,9 +277,9 @@ void GameManager::gunUpdate()
 		{
 			//这里把枪点转换成鼠标点击事件，需要添加
 			qDebug() << stpoints->stPointMsg.stPoint.x << stpoints->stPointMsg.stPoint.y;
-			ret = QPointF(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y);
+			ret = QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y);
 			QMouseEvent *mouseEvent = new QMouseEvent(QMouseEvent::MouseButtonPress, QPointF(0, 0), QPointF(0, 0), QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-			QApplication::postEvent(view, mouseEvent);
+			QApplication::postEvent(this->childAt(ret), mouseEvent);
 
 			//QTest::mouseClick(this, Qt::LeftButton, 0, ret, -1);
 

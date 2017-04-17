@@ -24,6 +24,7 @@
 #include<QWidget>
 #include<QGraphicsScene>
 #include<QGraphicsView>
+#include <QGraphicsItem>
 #include<QFontDatabase>
 #include<QFont>
 #include<QLabel>
@@ -111,9 +112,15 @@ private:
 	int safe_height;			// the highest hight you can get
 	int highest_score;			// the highest score in the history
 	static const int init_y = 540;
-	void over();
+	void gameover();
 	void single_over();
 	void couple_over();
+
+	void single_reset();
+	void couple_reset();
+
+	void countdown();
+	//void gameover();
 
 	//gun timer
 	QTimer* gunTimer;

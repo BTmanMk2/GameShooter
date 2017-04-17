@@ -8,6 +8,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QTimer>
+#include <QMediaPlayer>
 #include "Protocol.h"
 
 class StoneManager;
@@ -38,12 +39,9 @@ class Stone :public QObject, public QGraphicsPixmapItem {
 	qreal scaleStep;
 
 	QTimer* timer;
+	QMediaPlayer* stonePlayer;
 
 	StoneManager* parentManager;
-
-/*	QVector<SVGData::SVGTriangle>*tris;
-	QVector<SVGData::SVGFill>*fills;*/
-	//SVGData svg;
 
 protected:
 	void removeThis();

@@ -21,8 +21,8 @@ void StoneManager::keyPressEvent(QKeyEvent *event)
 
 void StoneManager::removeStone(unsigned int stoneID)
 {
-	curStack--;
-	inRangeStack--;
+	//curStack--;
+	//inRangeStack--;
 	if (stoneID < stonePointers.size()) {
 		stonePointers[stoneID] = NULL;
 	}
@@ -34,7 +34,7 @@ void StoneManager::removeStone(unsigned int stoneID)
 
 void StoneManager::popFront(unsigned int stoneID)
 {
-	inRangeStack++;
+	//inRangeStack++;
 	stonePointers[stoneID]->setZValue(LAYER_STONE_FRONT);
 	stoneLayer[stoneID] = LAYER_STONE_FRONT;
 	for (int i = 0; i < stoneLayer.size(); i++) {
@@ -66,7 +66,18 @@ void StoneManager::stop()
 
 void StoneManager::start()
 {
-	timer->start(1000);
+	timer->start(1300);
+}
+
+void StoneManager::reset()
+{
+	for (int i = 0; i < stonePointers.size(); i++) {
+		if (stonePointers[i] != NULL) {
+			scene()->removeItem(stonePointers[i]);
+		}
+	}
+	stoneLayer.clear();
+	stonePointers.clear();
 }
 
 void StoneManager::spawn() {
@@ -92,17 +103,14 @@ void StoneManager::spawn() {
 		target->setStoneType(stoneIndex);
 		stonePointers[sid] = target;
 
-		//set SVG data
-		//target->setSVGData(SVGTris[stoneIndex], SVGFills[stoneIndex]);
-
 		int layer = genLayer();		//alloc layer num
 		stoneLayer[sid] = layer;
 		scene()->addItem(target);
 		target->setZValue(layer);
 
-		std::cout << "birth zvalue: 0x" << std::hex << (int)target->zValue() << std::endl;
+		//std::cout << "birth zvalue: 0x" << std::hex << (int)target->zValue() << std::endl;
 
-		std::cout << target->x() << "  " << target->y() << std::endl;
+		//std::cout << target->x() << "  " << target->y() << std::endl;
 	//}
 		
 }
@@ -136,8 +144,8 @@ int StoneManager::genLayer()
 
 void StoneManager::addScore(int score)
 {
-	curStack--;
-	inRangeStack++;
+	//curStack--;
+	//inRangeStack++;
 	//play sound
 	//stonePlayer->play();
 	parentManager->hitOne(playerID, score);
@@ -155,8 +163,8 @@ void StoneManager::addScore(int score)
 
 void StoneManager::missOne()
 {
-	curStack--; 
-	inRangeStack--;
+	//curStack--; 
+	//inRangeStack--;
 
 	parentManager->missOne(playerID, 5);
 }
@@ -206,8 +214,7 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 		QImage* tempStoneImg = new QImage();
 		tempStoneImg->load(stoneName.c_str());
 		stoneImages.push_back(tempStoneImg);
-		/*SVGTris.push_back(&temptris);
-		SVGFills.push_back(&tempfills);*/
+
 	}
 	
 
@@ -220,15 +227,12 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 	this->playerID = playerID;
 
 	//set sound
-	stonePlayer = new QMediaPlayer();
-	stonePlayer->setMedia(QUrl::fromLocalFile("sound/test.ogg"));
+	//stonePlayer = new QMediaPlayer();
+	//stonePlayer->setMedia(QUrl::fromLocalFile("sound/Stone_hit.wav"));
 
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawn()));
-	timer->start(1300);
-	/*timer2 = new QTimer(this);
-	QObject::connect(timer2, SIGNAL(timeout()), this, SLOT(getGP()));
-	timer2->start(20);*/
+	//timer->start(1300);
 }
 
 StoneManager::~StoneManager()
