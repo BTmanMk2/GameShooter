@@ -105,6 +105,10 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	
 
 	mi1->addMark(10);
+
+	gunTimer = new QTimer(this);
+	QObject::connect(gunTimer, SIGNAL(timeout()), this, SLOT(gunUpdate()));
+	gunTimer->start(0);
 }
 
 GameManager::~GameManager()
@@ -175,7 +179,7 @@ void GameManager::missOne(GameProtocol & player, int height)
 		player1_height += height;
 		player1_miss += 1;
 		lock1.unlock();
-		waterLevel->riseUp(-height);
+		sandLevel->riseUp(-height);
 		if (safe_height <= player1_height) over();
 	}
 	else
@@ -184,7 +188,7 @@ void GameManager::missOne(GameProtocol & player, int height)
 		player2_height += height;
 		player2_miss += 1;
 		lock2.unlock();
-		sandLevel->riseUp(-height);
+		waterLevel->riseUp(-height);
 		if (safe_height <= player2_height) over();
 	}
 }
@@ -225,9 +229,28 @@ void GameManager::couple_over()
 	exit(0);
 }
 
-void GameManager::getGunPoint()
+
+
+void GameManager::gunUpdate()
 {
-	infraredCheck();
+	QPointF ret;
+	if (GetSingleShootPointsMsg != NULL)
+	{
+		StPointsMsg *stpoints = GetSingleShootPointsMsg();
+		while (stpoints != NULL)
+		{
+			//这里把枪点转换成鼠标点击事件，需要添加
+			qDebug() << stpoints->stPointMsg.stPoint.x << stpoints->stPointMsg.stPoint.y;
+			ret = QPointF(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y);
+			QMouseEvent *mouseEvent = new QMouseEvent(QMouseEvent::MouseButtonPress, QPointF(0, 0), QPointF(0, 0), QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+			QApplication::postEvent(view, mouseEvent);
+
+			//QTest::mouseClick(this, Qt::LeftButton, 0, ret, -1);
+
+			stpoints = stpoints->nextPointMsg;
+		}
+	}
+	//return ret;
 }
 
 void GameManager::keyPressEvent(QKeyEvent* event)

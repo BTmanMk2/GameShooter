@@ -176,10 +176,10 @@ double StoneManager::getCurrentSpeed()
 	return currentSpeed;
 }
 
-void StoneManager::getPoint()
+/*QPointF StoneManager::getPoint()
 {
-	parentManager->getGunPoint();
-}
+	//return parentManager->getGunPoint();
+}*/
 
 StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager* parentManager) {
 	this->parentManager = parentManager;
@@ -226,6 +226,9 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawn()));
 	timer->start(1300);
+	/*timer2 = new QTimer(this);
+	QObject::connect(timer2, SIGNAL(timeout()), this, SLOT(getGP()));
+	timer2->start(20);*/
 }
 
 StoneManager::~StoneManager()

@@ -27,7 +27,7 @@ void fragment::objDrawer(QPainter* painter)
 			painter->setBrush(stones[i].fills[j].brush);
 			painter->drawPolygon(stones[i].tris[j].triangle);
 
-			stones[i].tris[j].opacity -= (1.0 /(double) maxStep);
+			stones[i].tris[j].opacity *= 0.9; //-= (1.0 /(double) maxStep);
 		}
 	}
 	
@@ -37,11 +37,10 @@ void fragment::objDrawer(QPainter* painter)
 		if (stones[i].stepcnt >= 0) {
 			for (int j = 0; j < stones[i].tris.size(); j++) {
 				QPointF randdir = stones[i].directions[j];
+				stones[i].directions[j] *= 0.8;
 				for (int k = 0; k < stones[i].tris[j].triangle.size(); k++) {
 					stones[i].tris[j].triangle[k] += randdir;
-				}
-				//alpha decrease
-				
+				}				
 				
 			}
 			stones[i].stepcnt--;
@@ -118,7 +117,7 @@ fragment::fragment(int type, QPointF pos, QGraphicsItem* parent):bounding(2, 0, 
 
 	}
 
-	setZValue(5000);
+	setZValue(LAYER_FRAG);
 	setPos(pos);
 	startTimer(20);
 }
@@ -155,7 +154,7 @@ void fragment::addFrag(int type, QPointF pos)
 		}
 		fragvec /= temptris[i].triangle.size();
 		fragvec = fragvec - pos;
-		tempdir.push_back((fragvec / maxStep)*randoma());
+		tempdir.push_back((fragvec / maxStep)*randoma()*4);
 	}
 
 	fragStone tempstone;

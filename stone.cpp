@@ -62,7 +62,7 @@ Stone::Stone(QImage* stoneImg,	QPointF birthPos, QPointF shootPos, int stoneID, 
 
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(drop()));
-	timer->start(30);
+	timer->start(20);
 }
 
 
@@ -103,7 +103,10 @@ void Stone::mousePressEvent(QGraphicsSceneMouseEvent  *event)
 
 void Stone::drop() {
 	//std::cout << x() << "  " << y() << std::endl;
-	parentManager->getPoint();
+	/*QPointF gp = parentManager->getPoint();
+	QMouseEvent mouseEvent(QMouseEvent::MouseButtonPress, gp, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+	QCoreApplication::sendEvent(this, &mouseEvent);
+	QCoreApplication::sendEvent(scene(), &mouseEvent);*/
 	if (stage == STONE_BIRTH) {
 		setPos(x() + birthMov.x(), y() + birthMov.y());
 		setScale(scale() + scaleStep);

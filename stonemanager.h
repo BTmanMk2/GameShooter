@@ -41,6 +41,7 @@ class StoneManager :public QObject, public QGraphicsRectItem
 	std::vector<int>stoneLayer;
 
 	QTimer* timer;
+	QTimer* timer2;
 
 	GameManager* parentManager;
 
@@ -85,7 +86,7 @@ public:
 	void playfrag(int stoneIndex, QPointF pos) {
 		frag->addFrag(stoneIndex, pos-originPos);
 	}
-	void getPoint();
+	//QPointF getPoint();
 	public slots:
 	void spawn();
 };

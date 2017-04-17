@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QLibrary>
 #include <QXmlStreamReader>
+#include <qdebug.h>
 
 typedef struct
 {
@@ -285,24 +286,6 @@ void cameraEnd()
 		qCritical() << ("Failed to close the cameras!");
 }
 
-/*
-*红外枪点检测//这里需要每帧调用，需要添加
-*/
-void infraredCheck()
-{
-	if (GetSingleShootPointsMsg != NULL)
-	{
-		StPointsMsg *stpoints = GetSingleShootPointsMsg();
-		while (stpoints != NULL)
-		{
-			//这里把枪点转换成鼠标点击事件，需要添加
-			qDebug() << stpoints->stPointMsg.stPoint.x << stpoints->stPointMsg.stPoint.y;
-			//QMouseEvent mouseEvent(QMouseEvent::MouseButtonPress, QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-			//QCoreApplication::sendEvent(this, &mouseEvent);
-			stpoints = stpoints->nextPointMsg;
-		}
-	}
-}
 
 /*
 *蓝牙信号检测，由于子弹无限制不需要接受蓝牙信号，因此注释此函数

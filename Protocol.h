@@ -32,6 +32,7 @@ enum GameProtocol
 	//LAYER_TEMP=0x7f,
 	LAYER_STONE_BACK = 0x7f,		// the stone layer
 	LAYER_BG = 0x80,		// the backgroud layer
+	LAYER_FRAG,
 	LAYER_STONE_FRONT,		// the stone layer
 	LAYER_WATER,			// the water/sand layer
 	LAYER_SAND,				// the sand layer

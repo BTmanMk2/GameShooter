@@ -33,6 +33,7 @@
 #include<QTextStream>
 #include<QMainWindow>
 #include<QApplication>
+#include <QObject>
 
 //#include "fragment.h"
 
@@ -41,10 +42,11 @@ class FallManager;
 #endif
 
 class MarkItem;
-class GameManager : public QWidget
+class GameManager : public QWidget, QObject
 {
+	Q_OBJECT
 public:
-	//Q_OBJECT
+	
 	/**
 	* Constructor
 	*	width	int	:the width of the game
@@ -74,7 +76,7 @@ public:
 	/*********************** Events **************************/
 	void keyPressEvent(QKeyEvent* event);
 
-	void getGunPoint();
+	
 
 private:
 	/********************* Managers ***********************/
@@ -113,7 +115,11 @@ private:
 	void single_over();
 	void couple_over();
 
-	//public slots:
+	//gun timer
+	QTimer* gunTimer;
+
+	public slots:
+	void gunUpdate();
 	
 };
 
