@@ -21,19 +21,21 @@
 #include"BgManager.h"
 #include"SandLevel.h"
 #include "stonemanager.h"
-#include<QWidget>
-#include<QGraphicsScene>
-#include<QGraphicsView>
+#include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QGraphicsItem>
-#include<QFontDatabase>
-#include<QFont>
-#include<QLabel>
-#include<sstream>
-#include<QMutex>
-#include<QFile>
-#include<QTextStream>
-#include<QMainWindow>
-#include<QApplication>
+#include <QGraphicsTextItem>
+#include <QString>
+#include <QFontDatabase>
+#include <QFont>
+#include <QLabel>
+#include <sstream>
+#include <QMutex>
+#include <QFile>
+#include <QTextStream>
+#include <QMainWindow>
+#include <QApplication>
 #include <QObject>
 
 //#include "fragment.h"
@@ -96,7 +98,9 @@ private:
 	StoneManager* sm1;
 	StoneManager* sm2;
 
-	//fragment *frag;
+	QGraphicsRectItem *rect;
+	QGraphicsTextItem* secText;
+	int seccnt = 3;
 	/********************* Render ************************/
 	QGraphicsScene* scene;
 	QGraphicsView* view;
@@ -119,14 +123,16 @@ private:
 	void single_reset();
 	void couple_reset();
 
-	void countdown();
+	
 	//void gameover();
 
 	//gun timer
 	QTimer* gunTimer;
+	QTimer* countdownTimer;
 
 	public slots:
 	void gunUpdate();
+	void countdown();
 	
 };
 
@@ -159,6 +165,7 @@ public:
 	* You want to change the things
 	*/
 	void addMark(int mark);
+	void resetMark();
 
 	QRectF boundingRect() const;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = Q_NULLPTR);

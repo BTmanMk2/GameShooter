@@ -61,6 +61,8 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 		sm1->addFrag();
 		sm1->setFlag(QGraphicsItem::ItemIsFocusable);
 		sm1->setFocus();
+
+		//sm1->start();
 	}
 	break;
 	case COUPLE_PLAYER:
@@ -95,25 +97,48 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 		sm1->setFocus();
 		sm2->setFocus();
 
-		sm1->start();
-		sm2->start();
-
-		//frag = new fragment(1, QPointF(20, 20));
-		//scene->addItem(frag);
+		//sm1->start();
+		//sm2->start();
 
 	}
 	break;
 	default:
 		break;
 	}
+	// countdown before start
+	rect = new QGraphicsRectItem(0, 0, 1024, 768);
+	//rect->setRect(0, 0, 1024, 768);
+	rect->setPen(QPen(Qt::black));
+	QColor transpBlack(0, 0, 0, 150);
+	rect->setBrush(QBrush(transpBlack));
+	rect->setZValue(UI_BASE);
+	scene->addItem(rect);
 
-	
+	secText = new QGraphicsTextItem();
+	secText->setZValue(UI_NUMBER);
+	secText->setDefaultTextColor(Qt::white);
 
-	mi1->addMark(10);
+	int fontId = QFontDatabase::addApplicationFont(FONT);
+	QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+	QFont font;
+	font.setFamily(fontFamilies.at(0));
+	font.setPointSize(40);
+
+	secText->setFont(font);
+
+	secText->setPos(495, 356);
+	secText->setEnabled(false);
+	secText->setPlainText("3");
+	scene->addItem(secText);
+	//mi1->addMark(10);
 
 	gunTimer = new QTimer(this);
+	countdownTimer = new QTimer(this);
 	QObject::connect(gunTimer, SIGNAL(timeout()), this, SLOT(gunUpdate()));
+	QObject::connect(countdownTimer, SIGNAL(timeout()), this, SLOT(countdown()));
 	gunTimer->start(0);
+	countdownTimer->start(1000);
+
 }
 
 GameManager::~GameManager()
@@ -230,10 +255,10 @@ void GameManager::couple_over()
 	sm1->stop();
 	sm2->stop();
 
-	QGraphicsRectItem *rect;
+	QGraphicsRectItem *rect= new QGraphicsRectItem(0, 0, 1024, 768);
 	rect->setRect(0, 0, 1024, 768);
-	rect->setPen(QPen(Qt::black));
-	QColor transpBlack(255, 255, 255, 150);
+	//rect->setPen(QPen(Qt::black));
+	QColor transpBlack(0, 0, 0, 150);
 	rect->setBrush(QBrush(transpBlack));
 	rect->setZValue(UI_BASE);
 	scene->addItem(rect);
@@ -264,6 +289,7 @@ void GameManager::couple_reset()
 	//need fixed
 	//sandLevel->riseUp();
 	//waterLevel->riseUp();
+	
 
 }
 
@@ -287,6 +313,23 @@ void GameManager::gunUpdate()
 		}
 	}
 	//return ret;
+}
+
+void GameManager::countdown()
+{
+	seccnt--;
+	if (seccnt == 0) {
+		sm1->start();
+		if (sm2 != NULL) {
+			sm2->start();
+		}
+		scene->removeItem(rect);
+		scene->removeItem(secText);
+		countdownTimer->stop();
+		return;
+	}
+	QString sec = QString::number(seccnt);
+	secText->setPlainText(sec);
 }
 
 void GameManager::keyPressEvent(QKeyEvent* event)
@@ -348,6 +391,11 @@ void MarkItem::addMark(int mark)
 		this->mark += mark;
 	}
 	lock.unlock();
+}
+
+void MarkItem::resetMark()
+{
+	mark = 0;
 }
 
 QRectF MarkItem::boundingRect() const

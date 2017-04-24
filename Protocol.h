@@ -44,6 +44,7 @@ enum GameProtocol
 	STONE_UNDER_LINE,
 	STONE_FRAG,
 	UI_BASE = 0x300,
+	UI_NUMBER,
 	UI_BUTTON
 };
 
