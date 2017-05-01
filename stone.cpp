@@ -58,7 +58,7 @@ Stone::Stone(QImage* stoneImg,	QPointF birthPos, QPointF shootPos, int stoneID, 
 	popMovAccl.setY(popMov.y() / popAcclRatio);
 
 	stonePlayer = new QMediaPlayer();
-	stonePlayer->setMedia(QUrl::fromLocalFile("sound/Stone_hit.wav"));
+	stonePlayer->setMedia(QUrl::fromLocalFile(CONCRETE_HIT));
 
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(drop()));
@@ -99,22 +99,16 @@ void Stone::mousePressEvent(QGraphicsSceneMouseEvent  *event)
 
 		parentManager->playfrag(stoneType, QPointF(x(), y()));
 		removeThis();
-		//Game->stoneManager1->playFragment(QPointF loc, unsigned int stoneType);
+	
 	}
 }
 
 void Stone::drop() {
-	//std::cout << x() << "  " << y() << std::endl;
-	/*QPointF gp = parentManager->getPoint();
-	QMouseEvent mouseEvent(QMouseEvent::MouseButtonPress, gp, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-	QCoreApplication::sendEvent(this, &mouseEvent);
-	QCoreApplication::sendEvent(scene(), &mouseEvent);*/
 	if (stage == STONE_BIRTH) {
 		setPos(x() + birthMov.x(), y() + birthMov.y());
 		setScale(scale() + scaleStep);
 		if (std::abs(x() - birthPos.x()) < 1 && std::abs(y() - birthPos.y()) < 0.8) {
 			setScale(dropScale);
-			//this->setZValue(LAYER_STONE_FRONT);/*to be deleted*/
 			stage = STONE_ABOVE_LINE;
 			parentManager->popFront(stoneID);
 

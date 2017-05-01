@@ -51,7 +51,9 @@ class StoneManager :public QObject, public QGraphicsRectItem
 	unsigned int inRangeStack = 0;
 
 
-	fragment *frag;
+	fragment *frag;		//fragment effect
+
+	unsigned int combo;		//combo count
 
 protected:
 	unsigned int genStoneID();
@@ -69,6 +71,7 @@ public:
 	void reset();
 	void addScore(int score);
 	void missOne();
+	int getCombo();
 	int getWaterHeight();
 	int getCurrentScore();
 	double getCurrentSpeed();

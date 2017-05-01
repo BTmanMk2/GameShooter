@@ -1,8 +1,8 @@
 #pragma once
-#include<qgraphicsitem.h>
-#include<qpixmap.h>
-#include<qpainter.h>
-#include<qgraphicsscene.h>
+#include<QGraphicsItem>
+#include<QPixmap>
+#include<QPainter>
+#include<QGraphicsScene>
 #include"Protocol.h"
 
 class BgManager : public QObject, public QGraphicsItem

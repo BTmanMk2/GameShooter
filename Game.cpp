@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <QKeyEvent>
 
-#include "gun.h"
+//#include "gun.h"
 
 GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol pro, QWidget * parent)
 	:QWidget(parent), bm2(nullptr), mi2(nullptr), sandLevel(nullptr), window(main),
@@ -22,10 +22,10 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	view->setFixedSize(1024, 768);
 
 	//add by wzy
-	readGunXMl();
+	/*readGunXMl();
 	cameraInitial();
 	blueToothInitial();
-	equipmentTest = true;
+	equipmentTest = true;*/
 
 	// get the highest score
 	highest_score = 0;
@@ -126,17 +126,16 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 
 	secText->setFont(font);
 
-	secText->setPos(495, 356);
+	secText->setPos(495, 330);
 	secText->setEnabled(false);
 	secText->setPlainText("3");
 	scene->addItem(secText);
-	//mi1->addMark(10);
 
-	gunTimer = new QTimer(this);
+	//gunTimer = new QTimer(this);
 	countdownTimer = new QTimer(this);
-	QObject::connect(gunTimer, SIGNAL(timeout()), this, SLOT(gunUpdate()));
+	//QObject::connect(gunTimer, SIGNAL(timeout()), this, SLOT(gunUpdate()));
 	QObject::connect(countdownTimer, SIGNAL(timeout()), this, SLOT(countdown()));
-	gunTimer->start(0);
+	//gunTimer->start(0);
 	countdownTimer->start(1000);
 
 }
@@ -155,8 +154,8 @@ GameManager::~GameManager()
 	out << highest_score << endl;
 	file.close();
 	//add by wzy
-	blueToothEnd();
-	cameraEnd();
+	//blueToothEnd();
+	//cameraEnd();
 }
 
 void GameManager::hitOne(GameProtocol & player, int score)
@@ -236,8 +235,23 @@ int GameManager::getCurrentY(GameProtocol & player) const
 }
 
 
+
+int GameManager::getSafeHeight() const
+{
+	return safe_height;
+}
+
 void GameManager::gameover()
 {
+	qDebug() << "player1_score:" << player1_score;
+	qDebug() << "player2_score:" << player2_score;
+	int cur_highest_score = (player1_score > player2_score) ? player1_score : player2_score;
+	//load highest score
+	if (cur_highest_score > highest_score) {
+		//write highest score
+	}
+	scene->addItem(rect);
+	
 	if (gameMode == SINGLE_PLAYER) single_over();
 	else couple_over();
 }
@@ -255,13 +269,6 @@ void GameManager::couple_over()
 	sm1->stop();
 	sm2->stop();
 
-	QGraphicsRectItem *rect= new QGraphicsRectItem(0, 0, 1024, 768);
-	rect->setRect(0, 0, 1024, 768);
-	//rect->setPen(QPen(Qt::black));
-	QColor transpBlack(0, 0, 0, 150);
-	rect->setBrush(QBrush(transpBlack));
-	rect->setZValue(UI_BASE);
-	scene->addItem(rect);
 	Sleep(5000);
 	delete this;
 	QApplication::quit();
@@ -275,6 +282,7 @@ void GameManager::single_reset()
 	player1_height = 0;
 	player1_miss = 0;
 	//sandLevel->riseUp();
+	mi1->resetMark();
 }
 
 void GameManager::couple_reset()
@@ -289,11 +297,12 @@ void GameManager::couple_reset()
 	//need fixed
 	//sandLevel->riseUp();
 	//waterLevel->riseUp();
-	
+	mi1->resetMark();
+	mi2->resetMark();
 
 }
 
-void GameManager::gunUpdate()
+/*void GameManager::gunUpdate()
 {
 	QPoint ret;
 	if (GetSingleShootPointsMsg != NULL)
@@ -313,7 +322,7 @@ void GameManager::gunUpdate()
 		}
 	}
 	//return ret;
-}
+}*/
 
 void GameManager::countdown()
 {
@@ -415,7 +424,7 @@ void MarkItem::timerEvent(QTimerEvent * timer)
 {
 	// all done
 	lock.lock();
-	qDebug("We are In!!");
+	//qDebug("We are In!!");
 	if (new_mark == -1)
 	{
 		if (myTimer != 0)

@@ -75,6 +75,7 @@ public:
 	void missOne(GameProtocol& player, int height);
 	int getCurrentScore(GameProtocol& player) const;
 	int getCurrentY(GameProtocol& player) const;
+	int getSafeHeight()const;
 
 	/*********************** Events **************************/
 	void keyPressEvent(QKeyEvent* event);
@@ -115,7 +116,7 @@ private:
 	QMutex lock1, lock2;
 	int safe_height;			// the highest hight you can get
 	int highest_score;			// the highest score in the history
-	static const int init_y = 540;
+	static const int init_y = 590;
 	void gameover();
 	void single_over();
 	void couple_over();
@@ -127,11 +128,11 @@ private:
 	//void gameover();
 
 	//gun timer
-	QTimer* gunTimer;
+	//QTimer* gunTimer;
 	QTimer* countdownTimer;
 
 	public slots:
-	void gunUpdate();
+	//void gunUpdate();
 	void countdown();
 	
 };

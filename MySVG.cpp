@@ -94,7 +94,7 @@ int SVGData::getTriangle(QDomElement& e)
 	// get the fill pattern
 	QDomAttr qda = e.attributeNode("fill");
 	std::string fill = qda.value().toStdString();
-	qDebug("Tri fill id:%s", fill.c_str());
+	//qDebug("Tri fill id:%s", fill.c_str());
 	if (fill.substr(0, 3) == "url")
 	{
 		std::string data = fill.substr(5);

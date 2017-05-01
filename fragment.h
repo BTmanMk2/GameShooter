@@ -21,7 +21,7 @@ class fragment:public QGraphicsItem, public QObject
 	int stoneType;
 	QPointF birthpos;
 
-	int maxStep = 20;
+	int maxStep = 7;
 	double scalep = 0.728;
 
 	void objDrawer(QPainter* painter);

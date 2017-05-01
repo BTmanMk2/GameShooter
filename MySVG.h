@@ -1,11 +1,11 @@
 #pragma once
 #include<QtXml\qdom.h>
-#include<qfile.h>
-#include<qvector.h>
-#include<qmap.h>
+#include<QFile>
+#include<QVector>
+#include<QMap>
 #include<sstream>
-#include<qpolygon.h>
-#include<qbrush.h>
+#include<QPolygon>
+#include<QBrush>
 
 class SVGData
 {

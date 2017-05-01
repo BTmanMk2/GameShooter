@@ -11,20 +11,10 @@ double randoma() {
 
 void fragment::objDrawer(QPainter* painter)
 {
-	//QPolygonF test;
-	//test << QPointF(15, 120) << QPointF(100, 43) << QPointF(160, 200);
-	//painter->drawRect(QRect(40, 40, 180, 180));
-	//painter->drawPolygon(test);
-
-	/*for (int i = 0; i < 18; i++) {
-		painter->setBrush(stoneFills[0][stoneTris[0][i].fillIndex].brush);
-		painter->drawPolygon(stoneTris[0][i].triangle);
-	}*/
-
 	for (int i = 0; i < stones.size(); i++) {
 		for (int j = 0; j < stones[i].tris.size(); j++) {
 			painter->setOpacity(stones[i].tris[j].opacity);
-			stones[i].tris[j].opacity *= 0.9; //-= (1.0 ./(double) maxStep);
+			stones[i].tris[j].opacity *= 0.7; //-= (1.0 ./(double) maxStep);
 
 			painter->setBrush(stones[i].fills[j].brush);
 			painter->drawPolygon(stones[i].tris[j].triangle);
@@ -117,13 +107,11 @@ fragment::fragment(int type, QPointF pos, QGraphicsItem* parent):bounding(2, 0, 
 
 		stoneTris.push_back(temptris);
 		stoneFills.push_back(tempfills);
-
-
 	}
 
 	setZValue(LAYER_FRAG);
 	setPos(pos);
-	startTimer(20);
+	startTimer(0);
 }
 
 void fragment::addFrag(int type, QPointF pos)
@@ -137,9 +125,7 @@ void fragment::addFrag(int type, QPointF pos)
 		cntr += temptris[i].triangle[0];
 		cntr += temptris[i].triangle[1];
 		cntr += temptris[i].triangle[2];
-		/*temptris[i].triangle[0] += pos;
-		temptris[i].triangle[1] += pos;
-		temptris[i].triangle[2] += pos;*/
+		
 	}
 	cntr /= (3 * temptris.size());
 	QPointF off = pos - cntr;
@@ -156,6 +142,7 @@ void fragment::addFrag(int type, QPointF pos)
 			temptris[i].triangle[j] += off;
 			fragvec += temptris[i].triangle[j];
 		}
+		//set direction and speed
 		fragvec /= temptris[i].triangle.size();
 		fragvec = fragvec - pos;
 		tempdir.push_back((fragvec / maxStep)*randoma()*4);

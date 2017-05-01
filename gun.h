@@ -91,13 +91,14 @@ std::map<int, int> comportToIndex;
 /*
 * 读取Guns.xml
 */
-void readGunXMl()
+bool readGunXMl()
 {
 	QFile GunsXML("D:\\VRPT_Resource\\Resources\\Guns.xml");
 	if (!GunsXML.open(QFile::ReadOnly))
 	{
 		qCritical() << "can not read file Guns.xml";
 		system("pause");
+		return false;
 	}
 	else
 	{
@@ -160,18 +161,20 @@ void readGunXMl()
 		}
 		GunsXML.close();
 	}
+	return true;
 }
 
 /*
 * 初始化蓝牙模块
 */
-void blueToothInitial()
+bool blueToothInitial()
 {
 	QLibrary mylib("D:\\VRPT_Resource\\Resources\\TestBluetoothDLL.dll");
 	if (!mylib.load())
 	{
 		qCritical() << "TestBluetoothDLL.dll not found";
 		system("pause");
+		return false;
 	}
 	else
 	{
@@ -183,6 +186,7 @@ void blueToothInitial()
 		{
 			qCritical() << "function in TestBluetoothDLL not found";
 			system("pause");
+			return false;
 		}
 		else
 		{
@@ -199,22 +203,25 @@ void blueToothInitial()
 				else
 				{
 					qCritical() << "Open COM" << currentGun[i].gunComport << " failed";
+					return false;
 				}
 			}
 		}
 	}
+	return true;
 }
 
 /*
 * 初始化摄像头及枪点模块
 */
-void cameraInitial()
+bool cameraInitial()
 {
 	QLibrary mylib("D:\\VRPT_Resource\\Resources\\VRPTCameraTracking.dll");
 	if (!mylib.load())
 	{
 		qCritical() << "VRPTCameraTracking.dll not found";
 		system("pause");
+		return false;
 	}
 	else
 	{
@@ -228,6 +235,7 @@ void cameraInitial()
 		{
 			qCritical() << "function in VRPTCameraTracking not found";
 			system("pause");
+			return false;
 		}
 		else
 		{
@@ -243,15 +251,18 @@ void cameraInitial()
 				{
 					qCritical() << "Failed get StartShootPointModule function";
 					system("pause");
+					return false;
 				}
 			}
 			else
 			{
 				qCritical() << "Failed to start the camera!" << endl;
 				system("pause");
+				return false;
 			}
 		}
 	}
+	return true;
 }
 
 /*

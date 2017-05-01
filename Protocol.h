@@ -16,6 +16,10 @@
 #define STONE_SVG ".svg"
 
 #define SOUND_TEST "sound/test.ogg"
+#define CONCRETE_HIT "sound/concrete_hit.wav"
+#define GUN_SHOT "sound/gunshot.wav"
+//gunshot sound channels
+#define GUNSHOT_CHANNELS 7
 
 enum GameProtocol
 {

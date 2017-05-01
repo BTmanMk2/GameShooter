@@ -1,11 +1,11 @@
 #pragma once
-#include<qgraphicsitem.h>
-#include<qpainter>
-#include<qtimer.h>
-#include<qbrush.h>
+#include<QGraphicsItem>
+#include<QPainter>
+#include<QTimer>
+#include<QBrush>
 #include<time.h>
-#include<qmutex.h>
-#include<qtextstream.h>
+#include<QMutex>
+#include<QTextStream>
 #include"Protocol.h"
 #include"MySVG.h"
 

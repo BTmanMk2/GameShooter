@@ -1,6 +1,6 @@
 ﻿#include "TestMain.hpp"
 #include "Protocol.h"
-//#include "gun.h"
+#include "gun.h"
 
 TestMain::TestMain(int argc, char* argv[], QWidget * parent) : QMainWindow(parent){
 	// analysis the arguments
@@ -27,26 +27,36 @@ TestMain::TestMain(int argc, char* argv[], QWidget * parent) : QMainWindow(paren
 	blueToothInitial();
 	cameraInitial();
 	equipmentTest = true;*/
+	processCommand("gameOnline");
 
+	//setup gunwav
+	for (int i = 0; i < GUNSHOT_CHANNELS; i++) {
+		QMediaPlayer *tempGun = new QMediaPlayer();
+		tempGun->setMedia(QUrl::fromLocalFile(GUN_SHOT));
+		gunwav.push_back(tempGun);
+	}
 	
+	timer = new QTimer(this);
+	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeLimit()));
+	timer->start(5000);
 
 	// start the game
-	GameManager* gm = new GameManager(this, 1024, 768, gp);
+	/*GameManager* gm = new GameManager(this, 1024, 768, gp);
 	setCentralWidget(gm);
-	startTimer(20);
+	startTimer(20);*/
 }
 
 TestMain::~TestMain() {
-	/*blueToothEnd();
-	cameraEnd();*/
+	blueToothEnd();
+	cameraEnd();
 }
 
 /*
 *红外枪点检测//这里需要每帧调用，需要添加
 */
-/*QPointF TestMain::infraredCheck()
+QPointF TestMain::infraredCheck()
 {
-	QPointF ret;
+	QPoint ret;
 	if (GetSingleShootPointsMsg != NULL)
 	{
 		StPointsMsg *stpoints = GetSingleShootPointsMsg();
@@ -54,20 +64,101 @@ TestMain::~TestMain() {
 		{
 			//这里把枪点转换成鼠标点击事件，需要添加
 			qDebug() << stpoints->stPointMsg.stPoint.x << stpoints->stPointMsg.stPoint.y;
-			ret = QPointF(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y);
-			QMouseEvent mouseEvent(QMouseEvent::MouseButtonPress, QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-			QApplication::sendEvent(this, &mouseEvent);
+			ret = QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y);
+			QMouseEvent* mouseEvent = new QMouseEvent(QMouseEvent::MouseButtonPress, QPoint(0, 0), ret, ret, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+			QApplication::postEvent(this->childAt(ret), mouseEvent);
 
-			//QTest::mouseClick(this, Qt::LeftButton, 0, ret, -1);
+			//gunshot sound
+			gunwav[channelId]->play();
+			channelId++;
+			if (channelId >= 7) {
+				channelId = 0;
+			}
 
 			stpoints = stpoints->nextPointMsg;
 		}
 	}
 	return ret;
-}*/
+}
 
 void TestMain::timerEvent(QTimerEvent * event)
 {
-	//infraredCheck();
+	infraredCheck();
+	if (setter)
+	{
+		setter = false;
+		killTimer(timerId);
+		timerId = startTimer(0);
+		return;
+	}
 	return;
+}
+
+void TestMain::processPendingDatagram()
+{
+	//等待数据接收完毕再做处理
+	while (udpSocket->hasPendingDatagrams())
+	{
+		QByteArray recvData;
+		recvData.resize(udpSocket->pendingDatagramSize());
+		udpSocket->readDatagram(recvData.data(), recvData.size(), &clientIp, &clientPort); //从发送方的包中读取数据以及ip和port并赋值给类的变量
+																						   //statusText+="connet from "+clientIp.toString()+":"+QString::number(clientPort)+" ";
+																						   //statusText+=recvData+"\n";
+																						   //显示到状态标签
+		QString msg(QString::fromLocal8Bit(recvData));
+		qDebug() << "connet from " << clientIp.toString() << ":" << clientPort << " " << msg;
+		//处理
+		// ...
+		processCommand(msg);
+
+	}
+}
+
+void TestMain::processCommand(QString msg)
+{
+	if (msg == "gameOnline")
+	{
+		if (errorOccurs || onLineSignal) return;
+		// socketSend("gameOnline", clientIp, clientPort);
+		// start the equipment
+		if (!readGunXMl() ||
+			!blueToothInitial() ||
+			!cameraInitial())
+		{
+			//socketSend("gameError#0111111", clientIp, clientPort);
+			errorOccurs = true;
+			//return;
+		}
+		equipmentTest = true;
+
+		// start the game
+		GameManager* gm = new GameManager(this, 1024, 768, gp);
+		setCentralWidget(gm);
+		// socketSend("gameError#1111111", clientIp, clientPort);
+		timerId = startTimer(1000);
+		onLineSignal = true;
+		this->showFullScreen();
+	}
+	else if (msg == "gameControl#quit")
+	{
+		QApplication::quit();
+	}
+
+}
+
+//发送
+void TestMain::socketSend(QString sendStr, QHostAddress targetIp, quint16 targetPort)
+{
+	udpSocket->writeDatagram(sendStr.toStdString().c_str(), sendStr.length(), targetIp, targetPort);
+}
+
+void TestMain::timeLimit()
+{
+	timer->stop();
+	QObject::disconnect(timer, SIGNAL(timeout()), this, SLOT(timeLimit()));
+	delete timer;
+	if (!onLineSignal)
+	{
+		QApplication::quit();
+	}
 }

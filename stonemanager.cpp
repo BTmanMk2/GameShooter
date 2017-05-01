@@ -148,6 +148,9 @@ void StoneManager::addScore(int score)
 	//inRangeStack++;
 	//play sound
 	//stonePlayer->play();
+
+	combo++;	//add combo
+
 	parentManager->hitOne(playerID, score);
 	scoreGap += score;
 	if (scoreGap >= levelThreshold) {
@@ -163,10 +166,13 @@ void StoneManager::addScore(int score)
 
 void StoneManager::missOne()
 {
-	//curStack--; 
-	//inRangeStack--;
-
+	combo = 0;	//combo reset
 	parentManager->missOne(playerID, 5);
+}
+
+int StoneManager::getCombo()
+{
+	return combo;
 }
 
 int StoneManager::getWaterHeight()
@@ -225,7 +231,7 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 	shootLineY = shootLineHeight;
 
 	this->playerID = playerID;
-
+	
 	//set sound
 	//stonePlayer = new QMediaPlayer();
 	//stonePlayer->setMedia(QUrl::fromLocalFile("sound/Stone_hit.wav"));
