@@ -49,12 +49,6 @@ void fragment::objDrawer(QPainter* painter)
 	return;
 }
 
-/*void fragment::shuffle1()
-{
-	//painter->drawRect(QRect(-500, -500, 1500, 1500));
-	return;
-}*/
-
 QRectF fragment::boundingRect() const
 {
 	return bounding;
@@ -70,7 +64,6 @@ void fragment::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
 
 void fragment::timerEvent(QTimerEvent* timer)
 {
-	//shuffle1();
 	update();
 }
 

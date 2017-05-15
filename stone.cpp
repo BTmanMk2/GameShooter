@@ -23,7 +23,7 @@ void Stone::removeThis() {
 	scene()->removeItem(this);
 	delete this;
 }
-/* QVector<SVGData::SVGTriangle>*tris, QVector<SVGData::SVGFill>*fills,*/
+
 Stone::Stone(QImage* stoneImg,	QPointF birthPos, QPointF shootPos, int stoneID, int playerID, StoneManager* parentManager)
 	:QObject(), QGraphicsPixmapItem() {
 	this->parentManager = parentManager;

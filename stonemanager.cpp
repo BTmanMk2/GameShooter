@@ -107,11 +107,6 @@ void StoneManager::spawn() {
 		stoneLayer[sid] = layer;
 		scene()->addItem(target);
 		target->setZValue(layer);
-
-		//std::cout << "birth zvalue: 0x" << std::hex << (int)target->zValue() << std::endl;
-
-		//std::cout << target->x() << "  " << target->y() << std::endl;
-	//}
 		
 }
 
@@ -144,11 +139,6 @@ int StoneManager::genLayer()
 
 void StoneManager::addScore(int score)
 {
-	//curStack--;
-	//inRangeStack++;
-	//play sound
-	//stonePlayer->play();
-
 	combo++;	//add combo
 
 	parentManager->hitOne(playerID, score);
@@ -190,10 +180,11 @@ double StoneManager::getCurrentSpeed()
 	return currentSpeed;
 }
 
-/*QPointF StoneManager::getPoint()
+
+void StoneManager::update()
 {
-	//return parentManager->getGunPoint();
-}*/
+	return;
+}
 
 StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager* parentManager) {
 	this->parentManager = parentManager;
@@ -223,7 +214,6 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 
 	}
 	
-
 	//set key points
 	birthPos.setX(position.x() + 256/*width/2*/);
 	birthPos.setY(position.y() + 170/*offset*/);
@@ -231,14 +221,9 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 	shootLineY = shootLineHeight;
 
 	this->playerID = playerID;
-	
-	//set sound
-	//stonePlayer = new QMediaPlayer();
-	//stonePlayer->setMedia(QUrl::fromLocalFile("sound/Stone_hit.wav"));
 
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawn()));
-	//timer->start(1300);
 }
 
 StoneManager::~StoneManager()

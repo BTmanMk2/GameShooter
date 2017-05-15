@@ -19,7 +19,9 @@
 #define CONCRETE_HIT "sound/concrete_hit.wav"
 #define GUN_SHOT "sound/gunshot.wav"
 //gunshot sound channels
-#define GUNSHOT_CHANNELS 7
+#define GUNSHOT_CHANNELS 16
+
+const bool dbg = true;
 
 enum GameProtocol
 {

@@ -1,6 +1,7 @@
 ﻿#include "TestMain.hpp"
 #include "Protocol.h"
 #include "gun.h"
+#include <QMessageBox>
 
 TestMain::TestMain(int argc, char* argv[], QWidget * parent) : QMainWindow(parent){
 	// analysis the arguments
@@ -23,11 +24,13 @@ TestMain::TestMain(int argc, char* argv[], QWidget * parent) : QMainWindow(paren
 	QPalette palette = this->palette();
 	palette.setColor(QPalette::Window, QColor(255, 255, 255));
 	this->setPalette(palette);
-	/*readGunXMl();
-	blueToothInitial();
-	cameraInitial();
-	equipmentTest = true;*/
-	processCommand("gameOnline");
+
+	this->hide();
+	
+	//debug
+	if (dbg) {
+		processCommand("gameOnline");
+	}
 
 	//setup gunwav
 	for (int i = 0; i < GUNSHOT_CHANNELS; i++) {
@@ -35,15 +38,17 @@ TestMain::TestMain(int argc, char* argv[], QWidget * parent) : QMainWindow(paren
 		tempGun->setMedia(QUrl::fromLocalFile(GUN_SHOT));
 		gunwav.push_back(tempGun);
 	}
+
+	if (dbg == false) {
+		udpSocket = new QUdpSocket(this);
+		udpSocket->bind(QHostAddress::Any, 8888);
+		connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagram()));
+	}
 	
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeLimit()));
 	timer->start(5000);
 
-	// start the game
-	/*GameManager* gm = new GameManager(this, 1024, 768, gp);
-	setCentralWidget(gm);
-	startTimer(20);*/
 }
 
 TestMain::~TestMain() {
@@ -101,10 +106,11 @@ void TestMain::processPendingDatagram()
 	{
 		QByteArray recvData;
 		recvData.resize(udpSocket->pendingDatagramSize());
-		udpSocket->readDatagram(recvData.data(), recvData.size(), &clientIp, &clientPort); //从发送方的包中读取数据以及ip和port并赋值给类的变量
-																						   //statusText+="connet from "+clientIp.toString()+":"+QString::number(clientPort)+" ";
-																						   //statusText+=recvData+"\n";
-																						   //显示到状态标签
+		udpSocket->readDatagram(recvData.data(), recvData.size(), &clientIp, &clientPort); 
+		//从发送方的包中读取数据以及ip和port并赋值给类的变量
+		//statusText+="connet from "+clientIp.toString()+":"+QString::number(clientPort)+" ";
+		//statusText+=recvData+"\n";
+		//显示到状态标签
 		QString msg(QString::fromLocal8Bit(recvData));
 		qDebug() << "connet from " << clientIp.toString() << ":" << clientPort << " " << msg;
 		//处理
@@ -119,7 +125,10 @@ void TestMain::processCommand(QString msg)
 	if (msg == "gameOnline")
 	{
 		if (errorOccurs || onLineSignal) return;
-		// socketSend("gameOnline", clientIp, clientPort);
+
+		if (dbg == false)
+			socketSend("gameOnline", clientIp, clientPort);
+
 		// start the equipment
 		if (!readGunXMl() ||
 			!blueToothInitial() ||
@@ -127,14 +136,15 @@ void TestMain::processCommand(QString msg)
 		{
 			//socketSend("gameError#0111111", clientIp, clientPort);
 			errorOccurs = true;
-			//return;
+			return;
 		}
 		equipmentTest = true;
 
 		// start the game
 		GameManager* gm = new GameManager(this, 1024, 768, gp);
 		setCentralWidget(gm);
-		// socketSend("gameError#1111111", clientIp, clientPort);
+		if (dbg == false)
+			socketSend("gameError#1111111", clientIp, clientPort);
 		timerId = startTimer(1000);
 		onLineSignal = true;
 		this->showFullScreen();
@@ -157,8 +167,15 @@ void TestMain::timeLimit()
 	timer->stop();
 	QObject::disconnect(timer, SIGNAL(timeout()), this, SLOT(timeLimit()));
 	delete timer;
+	
 	if (!onLineSignal)
 	{
 		QApplication::quit();
 	}
+}
+
+void TestMain::keyPressEvent(QKeyEvent* event)
+{
+	QMessageBox::information(this, "a", "event get");
+	//exit message sent needed
 }

@@ -21,12 +21,6 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	view->setFixedSize(1024, 768);
 
-	//add by wzy
-	/*readGunXMl();
-	cameraInitial();
-	blueToothInitial();
-	equipmentTest = true;*/
-
 	// get the highest score
 	highest_score = 0;
 	QFile file(SCORE_FILE);
@@ -97,9 +91,6 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 		sm1->setFocus();
 		sm2->setFocus();
 
-		//sm1->start();
-		//sm2->start();
-
 	}
 	break;
 	default:
@@ -131,11 +122,9 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	secText->setPlainText("3");
 	scene->addItem(secText);
 
-	//gunTimer = new QTimer(this);
 	countdownTimer = new QTimer(this);
-	//QObject::connect(gunTimer, SIGNAL(timeout()), this, SLOT(gunUpdate()));
+	
 	QObject::connect(countdownTimer, SIGNAL(timeout()), this, SLOT(countdown()));
-	//gunTimer->start(0);
 	countdownTimer->start(1000);
 
 }
@@ -153,9 +142,7 @@ GameManager::~GameManager()
 	QTextStream out(&file);
 	out << highest_score << endl;
 	file.close();
-	//add by wzy
-	//blueToothEnd();
-	//cameraEnd();
+
 }
 
 void GameManager::hitOne(GameProtocol & player, int score)
@@ -300,29 +287,8 @@ void GameManager::couple_reset()
 	mi1->resetMark();
 	mi2->resetMark();
 
+	
 }
-
-/*void GameManager::gunUpdate()
-{
-	QPoint ret;
-	if (GetSingleShootPointsMsg != NULL)
-	{
-		StPointsMsg *stpoints = GetSingleShootPointsMsg();
-		while (stpoints != NULL)
-		{
-			//这里把枪点转换成鼠标点击事件，需要添加
-			qDebug() << stpoints->stPointMsg.stPoint.x << stpoints->stPointMsg.stPoint.y;
-			ret = QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y);
-			QMouseEvent *mouseEvent = new QMouseEvent(QMouseEvent::MouseButtonPress, QPointF(0, 0), QPointF(0, 0), QPoint(stpoints->stPointMsg.stPoint.x, stpoints->stPointMsg.stPoint.y), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-			QApplication::postEvent(this->childAt(ret), mouseEvent);
-
-			//QTest::mouseClick(this, Qt::LeftButton, 0, ret, -1);
-
-			stpoints = stpoints->nextPointMsg;
-		}
-	}
-	//return ret;
-}*/
 
 void GameManager::countdown()
 {

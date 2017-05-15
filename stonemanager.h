@@ -87,6 +87,8 @@ public:
 	void playfrag(int stoneIndex, QPointF pos) {
 		frag->addFrag(stoneIndex, pos-originPos);
 	}
+
+	void update();		//update and redraw all objects
 	//QPointF getPoint();
 	public slots:
 	void spawn();

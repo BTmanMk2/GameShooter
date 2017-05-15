@@ -21,6 +21,7 @@ class TestMain : public QMainWindow, public Ui::TestMain {
 public:
 	TestMain(int agrc, char* argv[], QWidget * parent = Q_NULLPTR);
 	~TestMain();
+	void keyPressEvent(QKeyEvent* event);
 
 	public slots:
 	void timeLimit();
