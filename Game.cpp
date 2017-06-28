@@ -78,7 +78,7 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 		scene->addItem(waterLevel);
 		scene->addItem(sandLevel);
 
-		QPointF poi1(0, 0);
+		QPointF poi1(0+72, 0);
 		QPointF poi2(512, 0);
 		sm1 = new StoneManager(poi1, PLAYER1, this);
 		sm2 = new StoneManager(poi2, PLAYER2, this);
@@ -96,6 +96,11 @@ GameManager::GameManager(QMainWindow* main, int width, int height, GameProtocol 
 	default:
 		break;
 	}
+	/****************** Connect Update() ********************/
+	updateTimer = new QTimer(this);
+	QObject::connect(updateTimer, SIGNAL(timeout()), this, SLOT(Update()));
+
+
 	// countdown before start
 	rect = new QGraphicsRectItem(0, 0, 1024, 768);
 	//rect->setRect(0, 0, 1024, 768);
@@ -301,6 +306,7 @@ void GameManager::countdown()
 		scene->removeItem(rect);
 		scene->removeItem(secText);
 		countdownTimer->stop();
+		updateTimer->start(20);
 		return;
 	}
 	QString sec = QString::number(seccnt);
@@ -313,6 +319,17 @@ void GameManager::keyPressEvent(QKeyEvent* event)
 		delete this;
 		exit(0);
 	}
+}
+
+void GameManager::Update()
+{
+	sm1->Update();
+	waterLevel->Update();
+	if (gameMode == COUPLE_PLAYER) {
+		sm2->Update();
+		sandLevel->Update();
+	}
+	
 }
 
 MarkItem::MarkItem(const char * fontfile, int font_size, int x, int y, int flag, GameProtocol layer, QGraphicsItem * parent)

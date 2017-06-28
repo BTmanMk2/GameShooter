@@ -130,9 +130,9 @@ void TestMain::processCommand(QString msg)
 			socketSend("gameOnline", clientIp, clientPort);
 
 		// start the equipment
-		if (!readGunXMl() ||
+		if (dbg == false && (!readGunXMl() ||
 			!blueToothInitial() ||
-			!cameraInitial())
+			!cameraInitial()))
 		{
 			//socketSend("gameError#0111111", clientIp, clientPort);
 			errorOccurs = true;

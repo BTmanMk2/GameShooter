@@ -66,7 +66,7 @@ void StoneManager::stop()
 
 void StoneManager::start()
 {
-	timer->start(1300);
+	//timer->start(1300);
 }
 
 void StoneManager::reset()
@@ -93,7 +93,7 @@ void StoneManager::spawn() {
 
 		//random position on shoot line
 		QPointF shootPos;
-		shootPos.setX(randint2(originPos.x() + 100, originPos.x() + 300/*-image.width*/));
+		shootPos.setX(randint2(originPos.x() + 100, originPos.x() + 228/*-image.width*/));
 		shootPos.setY(linePos);
 
 		unsigned int sid = genStoneID();
@@ -181,9 +181,20 @@ double StoneManager::getCurrentSpeed()
 }
 
 
-void StoneManager::update()
+void StoneManager::Update()
 {
-	return;
+	//float currentT;
+	frag->Update();
+	for (auto sto : stonePointers) {
+		if (sto != NULL) {
+			sto->Update();
+		}
+		
+	}
+	spawnCycle++;
+	if (spawnCycle%spawnRate == 0) {
+		spawn();
+	}
 }
 
 StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager* parentManager) {
@@ -215,15 +226,15 @@ StoneManager::StoneManager(QPointF position, GameProtocol playerID, GameManager*
 	}
 	
 	//set key points
-	birthPos.setX(position.x() + 256/*width/2*/);
-	birthPos.setY(position.y() + 170/*offset*/);
+	birthPos.setX(position.x() + 222/*width/2*/);
+	birthPos.setY(position.y() + 120/*offset*/);
 	linePos = shootLineHeight;	//shoot line
 	shootLineY = shootLineHeight;
 
 	this->playerID = playerID;
 
 	timer = new QTimer(this);
-	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawn()));
+	//QObject::connect(timer, SIGNAL(timeout()), this, SLOT(spawn()));
 }
 
 StoneManager::~StoneManager()
@@ -233,5 +244,5 @@ StoneManager::~StoneManager()
 			delete stonePointers[i];
 		}
 	}
-	timer->stop();
+	//timer->stop();
 }

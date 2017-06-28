@@ -19,7 +19,10 @@ const qreal dropScale = 0.2;
 
 class Stone :public QObject, public QGraphicsPixmapItem {
 	Q_OBJECT
-		unsigned int playerID;
+		
+
+protected:
+	unsigned int playerID;
 	unsigned int stoneID;
 	unsigned int stoneType;
 
@@ -42,8 +45,6 @@ class Stone :public QObject, public QGraphicsPixmapItem {
 	QMediaPlayer* stonePlayer;
 
 	StoneManager* parentManager;
-
-protected:
 	void removeThis();
 
 public:
@@ -65,4 +66,6 @@ public:
 	void mousePressEvent(QGraphicsSceneMouseEvent * event);
 	public slots:
 	void drop();
+
+	void Update();
 };

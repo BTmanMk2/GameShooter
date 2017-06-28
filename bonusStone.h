@@ -4,18 +4,18 @@ class bonusStone :
 	public Stone
 {
 	Q_OBJECT
-	unsigned int playerID;
+	/*unsigned int playerID;
 	unsigned int stoneID;
-	unsigned int stoneType;
+	unsigned int stoneType;*/
 
-	QPointF birthPos;
-	QPointF dropPos;
+	/*QPointF birthPos;
+	QPointF dropPos;*/
 
 
-	QTimer* timer;
+	/*QTimer* timer;
 	QMediaPlayer* stonePlayer;
 
-	StoneManager* parentManager;
+	StoneManager* parentManager;*/
 
 
 public:

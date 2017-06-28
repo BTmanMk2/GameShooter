@@ -95,12 +95,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Game.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="bonusStone.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_bonusStone.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="TestMain.ui">
@@ -119,9 +113,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Game.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="bonusStone.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

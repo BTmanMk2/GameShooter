@@ -24,7 +24,7 @@ SandLevel::SandLevel(const char * filename, int x, int y, int heightMax,
 	initSand();
 	riseUp(600, true);
 	bounding.setHeight(heightMax);
-	startTimer(20);
+	//startTimer(20);
 }
 
 void SandLevel::riseUp(qreal dis, bool record)
@@ -250,6 +250,10 @@ void SandLevel::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 
 void SandLevel::timerEvent(QTimerEvent * timer)
 {
+	
+}
+
+void SandLevel::Update() {
 	lock.lock();
 	if (stored_dis == 0)
 	{

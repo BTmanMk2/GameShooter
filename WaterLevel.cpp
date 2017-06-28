@@ -11,7 +11,7 @@ WaterLevel::WaterLevel(const char * filename, int x, int y, int heightMax,
 	setPos(x, y);
 	setZValue(layer);
 	riseUp(600);
-	startTimer(20);
+	//startTimer(20);
 	//qsrand(time(NULL));
 }
 
@@ -128,6 +128,10 @@ void WaterLevel::paint(QPainter * painter, const QStyleOptionGraphicsItem * opti
 
 void WaterLevel::timerEvent(QTimerEvent * timer)
 {
+	
+}
+
+void WaterLevel::Update() {
 	shuffle1();
 	update();
 }

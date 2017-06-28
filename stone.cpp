@@ -62,7 +62,7 @@ Stone::Stone(QImage* stoneImg,	QPointF birthPos, QPointF shootPos, int stoneID, 
 
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(drop()));
-	timer->start(20);
+	//timer->start(20);
 }
 
 
@@ -141,4 +141,9 @@ void Stone::drop() {
 	else {
 
 	}
+}
+
+void Stone::Update()
+{
+	drop();
 }

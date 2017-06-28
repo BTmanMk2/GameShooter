@@ -55,6 +55,9 @@ class StoneManager :public QObject, public QGraphicsRectItem
 
 	unsigned int combo;		//combo count
 
+	unsigned int spawnRate = 100;
+	unsigned int spawnCycle = 0;
+
 protected:
 	unsigned int genStoneID();
 	int genLayer();
@@ -88,7 +91,7 @@ public:
 		frag->addFrag(stoneIndex, pos-originPos);
 	}
 
-	void update();		//update and redraw all objects
+	void Update();		//update and redraw all objects
 	//QPointF getPoint();
 	public slots:
 	void spawn();

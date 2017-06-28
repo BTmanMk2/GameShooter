@@ -1,29 +1,6 @@
-﻿  Moc'ing Game.h...
-D:\Documents\Visual Studio 2015\Projects\GameShooter\GameShooter\Game.h(138): warning : Class GameManager inherits from two QObject subclasses QWidget and QObject. This is not supported!
-  Game.cpp
+﻿  Game.cpp
 d:\documents\visual studio 2015\projects\gameshooter\gameshooter\Game.h(49): warning C4584: “GameManager”: 基类“QObject”已是“QWidget”的基类
   d:\qt_5.7.1\5.7\msvc2015_64\include\qtgui\qdesktopservices.h(53): note: 参见“QObject”的声明
   d:\qt_5.7.1\5.7\msvc2015_64\include\qtwidgets\qwidget.h(127): note: 参见“QWidget”的声明
-  moc_Game.cpp
-d:\documents\visual studio 2015\projects\gameshooter\gameshooter\generatedfiles\debug\../../Game.h(49): warning C4584: “GameManager”: 基类“QObject”已是“QWidget”的基类
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtgui\qdesktopservices.h(53): note: 参见“QObject”的声明
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtwidgets\qwidget.h(127): note: 参见“QWidget”的声明
-  moc_TestMain.cpp
-d:\documents\visual studio 2015\projects\gameshooter\gameshooter\Game.h(49): warning C4584: “GameManager”: 基类“QObject”已是“QWidget”的基类
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtgui\qdesktopservices.h(53): note: 参见“QObject”的声明
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtwidgets\qgraphicssceneevent.h(61): note: 参见“QWidget”的声明
-  TestMain.cpp
-d:\documents\visual studio 2015\projects\gameshooter\gameshooter\Game.h(49): warning C4584: “GameManager”: 基类“QObject”已是“QWidget”的基类
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtgui\qdesktopservices.h(53): note: 参见“QObject”的声明
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtwidgets\qgraphicssceneevent.h(61): note: 参见“QWidget”的声明
-  main.cpp
-d:\documents\visual studio 2015\projects\gameshooter\gameshooter\Game.h(49): warning C4584: “GameManager”: 基类“QObject”已是“QWidget”的基类
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtgui\qdesktopservices.h(53): note: 参见“QObject”的声明
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtwidgets\qgraphicssceneevent.h(61): note: 参见“QWidget”的声明
-  stonemanager.cpp
-d:\documents\visual studio 2015\projects\gameshooter\gameshooter\Game.h(49): warning C4584: “GameManager”: 基类“QObject”已是“QWidget”的基类
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtgui\qdesktopservices.h(53): note: 参见“QObject”的声明
-  d:\qt_5.7.1\5.7\msvc2015_64\include\qtwidgets\qwidget.h(127): note: 参见“QWidget”的声明
-  正在生成代码...
   GameShooter.vcxproj -> D:\Documents\Visual Studio 2015\Projects\GameShooter\x64\Debug\GameShooter.exe
   GameShooter.vcxproj -> D:\Documents\Visual Studio 2015\Projects\GameShooter\x64\Debug\GameShooter.pdb (Full PDB)

@@ -81,6 +81,7 @@ public:
 	void keyPressEvent(QKeyEvent* event);
 
 	
+	
 
 private:
 	/********************* Managers ***********************/
@@ -130,10 +131,13 @@ private:
 	//gun timer
 	//QTimer* gunTimer;
 	QTimer* countdownTimer;
+	QTimer* updateTimer;
 
 	public slots:
 	//void gunUpdate();
 	void countdown();
+	/************************* Update **********************/
+	void Update();
 	
 };
 

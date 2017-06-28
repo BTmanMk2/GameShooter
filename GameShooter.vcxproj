@@ -72,10 +72,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BgManager.cpp" />
-    <ClCompile Include="bonusStone.cpp" />
     <ClCompile Include="fragment.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_bonusStone.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_Game.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -158,7 +156,6 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
-    <CustomBuild Include="bonusStone.h" />
     <ClInclude Include="GeneratedFiles\ui_TestMain.h" />
     <ClInclude Include="gun.h" />
     <ClInclude Include="MySVG.h" />

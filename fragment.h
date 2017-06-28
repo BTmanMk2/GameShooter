@@ -49,6 +49,8 @@ public:
 	void timerEvent(QTimerEvent* timer);
 	void keyReleaseEvent(QKeyEvent* event);
 
+	void Update();
+
 	/**********************************************/
 	fragment(int type, QPointF pos, QGraphicsItem* parent = Q_NULLPTR);
 

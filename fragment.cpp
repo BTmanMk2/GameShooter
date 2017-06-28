@@ -64,12 +64,17 @@ void fragment::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
 
 void fragment::timerEvent(QTimerEvent* timer)
 {
-	update();
+	//update();
 }
 
 void fragment::keyReleaseEvent(QKeyEvent* event)
 {
 
+}
+
+void fragment::Update()
+{
+	update();
 }
 
 fragment::fragment(int type, QPointF pos, QGraphicsItem* parent):bounding(2, 0, 200, 256)
@@ -104,7 +109,7 @@ fragment::fragment(int type, QPointF pos, QGraphicsItem* parent):bounding(2, 0, 
 
 	setZValue(LAYER_FRAG);
 	setPos(pos);
-	startTimer(0);
+	//startTimer(0);
 }
 
 void fragment::addFrag(int type, QPointF pos)

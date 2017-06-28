@@ -36,6 +36,9 @@ public:
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = Q_NULLPTR);
 	void timerEvent(QTimerEvent* timer);
 	void keyReleaseEvent(QKeyEvent* event);
+
+	void Update();
+
 private:
 	QVector<SVGData::SVGTriangle> tris;
 	QVector<SVGData::SVGFill> fills;
